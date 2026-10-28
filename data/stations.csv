@@ -1,0 +1,5 @@
+station_id,location_id,capacity_kwh,capacity_units,active
+ST1,S02,125,12,true
+ST2,S05,95,9,true
+ST3,S09,78,7,true
+ST4,S08,54,5,false

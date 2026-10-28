@@ -1,0 +1,4 @@
+edge_id,u,v,role
+R06,S04,S05,in_forest_with_replacement
+R20,S10,S11,in_forest_no_replacement
+R07,S02,S04,not_in_forest

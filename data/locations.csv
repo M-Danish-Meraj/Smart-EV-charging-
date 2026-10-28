@@ -1,0 +1,13 @@
+location_id,name,latitude,longitude,severity,is_hub,active
+S01,Saddar,24.8556,67.0300,6,true,true
+S02,Clifton,24.8138,67.0300,8,false,true
+S03,DHA,24.7950,67.0650,9,false,true
+S04,PECHS,24.8700,67.0600,7,false,true
+S05,Gulshan-e-Iqbal,24.9200,67.0950,10,false,true
+S06,Gulistan-e-Johar,24.9180,67.1350,7,false,true
+S07,North Nazimabad,24.9420,67.0400,6,false,true
+S08,Korangi,24.8300,67.1300,5,false,true
+S09,Malir,24.8950,67.2000,5,false,true
+S10,Airport,24.9000,67.1650,4,false,true
+S11,Landhi,24.8450,67.2050,3,false,true
+S12,Surjani Town,25.0300,67.0550,2,false,true
