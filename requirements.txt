@@ -1,0 +1,5 @@
+numpy>=1.26
+matplotlib>=3.8
+pytest>=8.0
+# networkx is used ONLY in tests/ to cross-check Kruskal; never import it in src/
+networkx>=3.2
