@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}</style>
+<title>Karachi-EV-12 Explained</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a storybook column (~68ch) with a sticky chapter list on wide screens; diagrams sit full-width inside the column. */
+:root {
+  --bg: #f4f7fa;
+  --surface: #ffffff;
+  --ink: #142231;
+  --muted: #566577;
+  --line: #d6dee8;
+  --accent: #0b7ca3;
+  --accent-soft: #e2f2f8;
+  --kid: #fff4cf;
+  --kid-line: #e8c95f;
+  --good: #157a3e;
+  --warn: #a95a05;
+  --bad: #c22f2f;
+  --violet: #6d4fd0;
+  --pink: #c0337a;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1520; --surface: #142131; --ink: #e5edf5; --muted: #9caabb; --line: #263649;
+    --accent: #43c8f0; --accent-soft: #103246; --kid: #2a2410; --kid-line: #7a6420;
+    --good: #3fd08a; --warn: #f2ae4b; --bad: #f47272; --violet: #a993ff; --pink: #f07ab4;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1520; --surface: #142131; --ink: #e5edf5; --muted: #9caabb; --line: #263649;
+  --accent: #43c8f0; --accent-soft: #103246; --kid: #2a2410; --kid-line: #7a6420;
+  --good: #3fd08a; --warn: #f2ae4b; --bad: #f47272; --violet: #a993ff; --pink: #f07ab4;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.shell { max-width: 1120px; margin: 0 auto; padding-block: 40px 80px;
+  display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 48px; }
+@media (max-width: 900px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: 24px 64px; } .toc { display: none; } }
+
+.toc { position: sticky; top: calc(24px + env(safe-area-inset-top, 0px)); align-self: start; font-size: 14px; }
+.toc p { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: c; }
+.toc a { display: flex; gap: 10px; padding: 5px 8px; border-radius: 6px; color: var(--muted); text-decoration: none; }
+.toc a::before { counter-increment: c; content: counter(c, decimal-leading-zero); font-family: var(--font-mono); font-size: 11px; padding-top: 2px; color: var(--accent); }
+.toc a:hover, .toc a:focus-visible { background: var(--accent-soft); color: var(--ink); outline: none; }
+
+main { min-width: 0; max-width: 720px; }
+.mobile-toc { display: none; margin: 0 0 32px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.mobile-toc summary { cursor: pointer; padding: 10px 14px; font-weight: 700; }
+.mobile-toc ol { margin: 0; padding: 0 14px 12px 34px; font-size: 15px; }
+.mobile-toc a { color: var(--accent); }
+@media (max-width: 900px) { .mobile-toc { display: block; } }
+
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.15; }
+h1 { font-size: clamp(34px, 6vw, 52px); font-weight: 800; margin: 0 0 14px; letter-spacing: -0.01em; }
+h2 { font-size: 30px; font-weight: 800; margin: 0 0 12px; }
+h3 { font-size: 20px; font-weight: 600; margin: 28px 0 8px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+.lede { font-size: 20px; color: var(--muted); margin: 0; }
+section { padding-top: 56px; scroll-margin-top: 16px; }
+p { margin: 0 0 14px; }
+ul, ol { padding-left: 22px; margin: 0 0 14px; }
+li { margin-bottom: 6px; }
+strong { font-weight: 700; }
+code, .mono { font-family: var(--font-mono); font-size: .86em; }
+code { background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+a { color: var(--accent); }
+
+/* "like you're ten" boxes */
+.kid { background: var(--kid); border: 1px solid var(--kid-line); border-radius: 12px; padding: 14px 16px; margin: 18px 0; }
+.kid .tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--warn); display: block; margin-bottom: 4px; }
+.kid p:last-child { margin: 0; }
+/* grown-up word chips */
+.term { display: inline-block; font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; margin: 0 4px 4px 0; background: var(--surface); color: var(--muted); }
+.term b { color: var(--ink); font-weight: 600; }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin: 20px 0; }
+.figure figcaption, .caption { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.scroll-x { overflow-x: auto; }
+
+table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); font-size: 14px; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 18px 0; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.stat .v { font-family: var(--font-mono); font-size: 22px; font-weight: 600; }
+.stat .l { font-size: 13px; color: var(--muted); }
+
+/* map */
+.seg { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); flex-wrap: wrap; }
+.seg button { font: 600 13px var(--font-mono); border: 0; background: transparent; color: var(--muted); padding: 6px 10px; border-radius: 7px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#map { width: 100%; min-width: 560px; height: auto; display: block; margin-top: 12px; }
+#map text { font-family: var(--font-body); }
+.r-forest { stroke: var(--accent); stroke-width: 4; }
+.r-repl { stroke: var(--good); stroke-width: 5; }
+.r-idle { stroke: var(--muted); stroke-width: 1.3; stroke-dasharray: 5 5; opacity: .55; }
+.r-closed { stroke: var(--bad); stroke-width: 1.8; stroke-dasharray: 2 6; opacity: .8; }
+.r-failed { stroke: var(--bad); stroke-width: 3; stroke-dasharray: 10 6; }
+.r-removed { stroke: var(--line); stroke-width: 1.2; stroke-dasharray: 2 6; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--muted); margin-top: 10px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* backpacks */
+.packs { display: grid; gap: 14px; }
+.pack-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 12px; align-items: center; }
+@media (max-width: 520px) { .pack-row { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+.pack-name { font-weight: 700; font-size: 15px; }
+.pack-name small { display: block; font-weight: 400; color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+.cells { display: flex; gap: 3px; flex-wrap: wrap; }
+.car { display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 6px; font: 600 12px var(--font-mono); color: var(--surface); }
+.car.s1 { background: var(--accent); } .car.s2 { background: var(--violet); } .car.s3 { background: var(--pink); }
+.unit { width: 34px; }
+
+.steps { counter-reset: s; list-style: none; padding: 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 44px; margin-bottom: 16px; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font: 600 14px var(--font-mono); display: flex; align-items: center; justify-content: center; }
+
+.tour { display: grid; gap: 14px; }
+.tour-item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.tour-item h3 { margin: 0 0 6px; display: flex; gap: 10px; align-items: baseline; }
+.tour-item h3 .n { font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
+.swatch { display: inline-block; width: 22px; vertical-align: middle; margin-right: 4px; }
+.pill { display: inline-block; font: 600 12px var(--font-mono); border-radius: 6px; padding: 1px 7px; border: 1px solid currentColor; }
+
+.wire { display: grid; grid-template-columns: 70px 1fr; gap: 6px; font: 600 11px var(--font-mono); color: var(--muted); }
+.wire div { border: 1.5px dashed var(--line); border-radius: 8px; padding: 6px; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 34px; }
+.wire .side { grid-row: span 6; }
+.wire .hl { border-color: var(--accent); color: var(--accent); }
+
+footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="shell">
+  <nav class="toc" aria-label="Chapters">
+    <p>Chapters</p>
+    <ol>
+      <li><a href="#story">The story</a></li>
+      <li><a href="#problem">The problem</a></li>
+      <li><a href="#goal">The goals</a></li>
+      <li><a href="#city">Our pretend city</a></li>
+      <li><a href="#greedy">Part A: roads</a></li>
+      <li><a href="#link">The island rule</a></li>
+      <li><a href="#dp">Part B: energy</a></li>
+      <li><a href="#check">Checking our work</a></li>
+      <li><a href="#experiments">Experiments E1–E5</a></li>
+      <li><a href="#edge">Tricky cases</a></li>
+      <li><a href="#steps">Steps we took</a></li>
+      <li><a href="#ui">Dashboard tour</a></li>
+      <li><a href="#words">Word list</a></li>
+      <li><a href="#limits">What it can't do</a></li>
+      <li><a href="#run">How to run it</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header>
+      <p class="eyebrow">CT-363 Design &amp; Analysis of Algorithms · NED University</p>
+      <h1>Karachi-EV-12, explained from A to Z</h1>
+      <p class="lede">The whole Smart EV Charging project, told the way you would tell it to a ten-year-old: what the problem was, what we wanted, how we solved it, what we built, and how to read every part of the dashboard.</p>
+    </header>
+
+    <details class="mobile-toc">
+      <summary>Chapters</summary>
+      <ol>
+        <li><a href="#story">The story</a></li><li><a href="#problem">The problem</a></li><li><a href="#goal">The goals</a></li>
+        <li><a href="#city">Our pretend city</a></li><li><a href="#greedy">Part A: roads</a></li><li><a href="#link">The island rule</a></li>
+        <li><a href="#dp">Part B: energy</a></li><li><a href="#check">Checking our work</a></li><li><a href="#experiments">Experiments E1–E5</a></li>
+        <li><a href="#edge">Tricky cases</a></li><li><a href="#steps">Steps we took</a></li><li><a href="#ui">Dashboard tour</a></li>
+        <li><a href="#words">Word list</a></li><li><a href="#limits">What it can't do</a></li><li><a href="#run">How to run it</a></li>
+      </ol>
+    </details>
+
+    <!-- 1 -->
+    <section id="story">
+      <p class="eyebrow">Chapter 1</p>
+      <h2>The story in one minute</h2>
+      <p>Imagine Karachi in the future. Lots of people drive <strong>electric cars</strong>, and electric cars need to be charged, the way a phone needs charging. So the city wants to set up <strong>charging stations</strong>.</p>
+      <p>The city has two puzzles:</p>
+      <ol>
+        <li><strong>Which roads should connect the charging places</strong> so that everything is linked, while spending as little money as possible?</li>
+        <li><strong>Which cars should each station charge</strong> when there is not enough electricity for everyone?</li>
+      </ol>
+      <p>We solved the first puzzle with a <strong>greedy</strong> method (always grab the cheapest good thing next) and the second with <strong>dynamic programming</strong> (break a big question into small ones and remember the answers). Then we tested everything, ran experiments, and built a dashboard to show the results.</p>
+      <div class="kid">
+        <span class="tag">Like you're ten</span>
+        <p>Think of a big school. Puzzle one: draw paths between classrooms using the least paint, so every classroom can be reached. Puzzle two: there are only a few lunchboxes of sweets, each with a size limit, and many children who want sweets. Who gets sweets so the most children are happy?</p>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="problem">
+      <p class="eyebrow">Chapter 2</p>
+      <h2>What was the problem?</h2>
+      <h3>Puzzle A: connecting places with roads</h3>
+      <p>We have 12 places (we call them <strong>sites</strong>) and 24 roads between them. Every road has a <strong>cost</strong> (how much it costs to use or build it). We want to pick roads so that every place we can reach is connected, and the total cost is as small as possible.</p>
+      <p>What makes it tricky:</p>
+      <ul>
+        <li><strong>Some roads are closed</strong> (unavailable). We are not allowed to use them, even if they are cheap.</li>
+        <li>Because of closed roads, some places are <strong>cut off</strong>, like little islands. We can't magically connect them.</li>
+        <li>Later, <strong>roads can break</strong>. We need to fix our road plan quickly.</li>
+        <li>Sometimes two roads cost exactly the same. We need a <strong>fair, fixed rule</strong> to choose between them, so the answer is always the same.</li>
+      </ul>
+      <h3>Puzzle B: sharing limited electricity</h3>
+      <p>We have 24 cars asking for a charge (we call them <strong>requests</strong>) and 3 working stations. Each station can only give out a fixed amount of energy. Each car brings a <strong>benefit</strong> score (how good it is to serve that car).</p>
+      <ul>
+        <li>There is <strong>more demand than energy</strong>, so some cars must be left out.</li>
+        <li>A car needs its <strong>whole</strong> charge. Half a charge doesn't count.</li>
+        <li>A car can only go to <strong>one</strong> station, and only to a station it can actually reach by road.</li>
+        <li>Some cars want <strong>more energy than any station has</strong>. They can never be served.</li>
+      </ul>
+      <div class="kid">
+        <span class="tag">Like you're ten</span>
+        <p>You have three backpacks of different sizes and a pile of toys. Each toy has a size and a "fun score". You can't cut a toy in half, and a toy can only go in one backpack. Which toys do you pack to get the most fun without the backpacks bursting?</p>
+      </div>
+      <p>The course gave us a flood-relief version of this assignment (villages, trucks, relief items). We used EV charging as our own example. The two map onto each other exactly:</p>
+      <div class="scroll-x">
+        <table>
+          <thead><tr><th>Course sheet (flood relief)</th><th>Our project (EV charging)</th></tr></thead>
+          <tbody>
+            <tr><td>Village</td><td>Site (a place in Karachi)</td></tr>
+            <tr><td>Road / submerged road</td><td>Road / unavailable road</td></tr>
+            <tr><td>Emergency centre (EOC)</td><td>Hub (Saddar)</td></tr>
+            <tr><td>Truck</td><td>Charging station</td></tr>
+            <tr><td>Relief item</td><td>A car's charging request</td></tr>
+            <tr><td>Lives impacted</td><td>Benefit score</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="goal">
+      <p class="eyebrow">Chapter 3</p>
+      <h2>What were the goals?</h2>
+      <ol>
+        <li>Connect every reachable place with the <strong>cheapest set of roads</strong>, never using a closed road.</li>
+        <li>When roads break, <strong>repair the plan</strong> and prove the repair is just as cheap as starting over.</li>
+        <li>Give energy to cars to get the <strong>highest total benefit</strong>, without overfilling any station and without giving one car two stations.</li>
+        <li>For every car that is not served, <strong>say why</strong>.</li>
+        <li><strong>Prove</strong> the methods are correct and <strong>measure</strong> how fast they are.</li>
+        <li>Run <strong>experiments</strong>: roads breaking, important places removed, less energy, more cars, bigger cities.</li>
+        <li>Show everything in a <strong>dashboard</strong> that anyone can explore.</li>
+      </ol>
+      <p>The course marks this out of 20: <strong>8</strong> for working, tested code; <strong>6</strong> for proofs and speed analysis; <strong>4</strong> for explaining trade-offs; <strong>2</strong> for matching each problem to the right method.</p>
+    </section>
+
+    <!-- 4 -->
+    <section id="city">
+      <p class="eyebrow">Chapter 4</p>
+      <h2>Our pretend city: Karachi-EV-12</h2>
+      <p>We didn't have real data, so we made a <strong>pretend (synthetic) city</strong>. The place names are real Karachi areas, but every cost, score and size is made up. We say "synthetic" everywhere so nobody thinks these are real numbers.</p>
+      <div class="stats">
+        <div class="stat"><div class="v">12</div><div class="l">sites (places)</div></div>
+        <div class="stat"><div class="v">24</div><div class="l">roads, 4 of them closed</div></div>
+        <div class="stat"><div class="v">3 + 1</div><div class="l">stations working, plus 1 spare</div></div>
+        <div class="stat"><div class="v">24</div><div class="l">car requests</div></div>
+      </div>
+      <p>A small computer program (<code>scripts/gen_dataset.py</code>) writes the city into four simple spreadsheet files (CSV). It uses a fixed "random seed" (363, our course number), so it makes <strong>exactly the same city every time</strong>.</p>
+      <h3>Why some places matter more: severity</h3>
+      <p>Every place has a <strong>severity</strong> number from 2 to 10. Think of it as "how important is this place". Gulshan-e-Iqbal has 10 and DHA has 9, the two highest. Saddar is the <strong>hub</strong> (the main centre), and we deliberately gave it a middle score so it is not one of the top two.</p>
+      <h3>Energy units, and why we round</h3>
+      <p>Computers find whole numbers easier, so we count energy in <strong>units</strong>, where <strong>1 unit = 10 kWh</strong> (kWh is how electricity is measured).</p>
+      <ul>
+        <li>A <strong>car's request rounds up</strong>: a car wanting 21 kWh needs 3 units. We'd rather give a tiny bit extra than not enough.</li>
+        <li>A <strong>station's capacity rounds down</strong>: a station with 125 kWh offers 12 units. We never promise energy it doesn't have.</li>
+      </ul>
+      <div class="kid">
+        <span class="tag">Like you're ten</span>
+        <p>If a toy is 2½ blocks long, you need a 3-block space for it. If a backpack holds 12½ blocks, you can only count on 12 full blocks.</p>
+      </div>
+      <h3>The city was built on purpose</h3>
+      <p>We designed the city so every tricky case shows up:</p>
+      <ul>
+        <li><strong>Three islands.</strong> The 4 closed roads are exactly the ones joining Malir, Airport and Landhi to the rest. Surjani Town has no roads at all. So there are 3 groups: the big main group (8 places), the cut-off group (3 places) and Surjani alone.</li>
+        <li><strong>A triangle of cheap roads</strong> (Saddar, Clifton, DHA) to show how we avoid going in circles.</li>
+        <li><strong>Roads with the same cost</strong> to test the fair tie-breaking rule.</li>
+        <li><strong>A closed road that is the cheapest of all</strong> (Korangi to Landhi, cost 2), to prove we really ignore closed roads.</li>
+        <li><strong>Too much demand</strong>: in the main group, cars want 37 units but stations hold only 21.</li>
+        <li><strong>Two giant cars</strong>: EV08 needs 14 units (no station is that big) and EV20 needs 9 units (Malir's station holds only 7).</li>
+      </ul>
+      <p>A test checks all of these properties automatically, so the city can never quietly change.</p>
+    </section>
+
+    <!-- 5 -->
+    <section id="greedy">
+      <p class="eyebrow">Chapter 5 · Part A</p>
+      <h2>Connecting places: the greedy way</h2>
+      <p>For roads we used <strong>Kruskal's algorithm</strong>. It is called <strong>greedy</strong> because at every step it grabs the cheapest road that is still useful, and never changes its mind.</p>
+      <h3>How Kruskal works, step by step</h3>
+      <ol class="steps">
+        <li><strong>Throw away closed roads</strong> before doing anything else. They are not allowed, so we don't even look at them.</li>
+        <li><strong>Line up the remaining roads from cheapest to most expensive.</strong> If two roads cost the same, the one touching more important places (higher total severity) goes first. If that is also a tie, we go by the place codes (S01, S02, …) so the order is always the same.</li>
+        <li><strong>Walk down the line.</strong> For each road, ask: "Does this road join two places that are <em>not already connected</em>?"
+          <ul><li>Yes: keep it.</li><li>No: skip it, because it would only make a loop (a circle), which wastes money.</li></ul>
+        </li>
+        <li><strong>Stop at the end.</strong> What we kept is the cheapest possible road plan.</li>
+      </ol>
+      <div class="figure">
+        <svg viewBox="0 0 520 210" width="100%" role="img" aria-label="Triangle Saddar, Clifton, DHA with road costs 2, 3 and 3; the third road is skipped because it makes a loop">
+          <line x1="90" y1="50" x2="260" y2="170" style="stroke:var(--accent)" stroke-width="5" stroke-linecap="round"/>
+          <line x1="260" y1="170" x2="430" y2="50" style="stroke:var(--accent)" stroke-width="5" stroke-linecap="round"/>
+          <line x1="90" y1="50" x2="430" y2="50" style="stroke:var(--bad)" stroke-width="2.5" stroke-dasharray="8 6"/>
+          <circle cx="90" cy="50" r="13" style="fill:var(--surface);stroke:var(--ink)" stroke-width="2.5"/>
+          <circle cx="430" cy="50" r="13" style="fill:var(--surface);stroke:var(--ink)" stroke-width="2.5"/>
+          <circle cx="260" cy="170" r="13" style="fill:var(--surface);stroke:var(--ink)" stroke-width="2.5"/>
+          <text x="90" y="24" text-anchor="middle" style="fill:var(--ink)" font-size="15" font-weight="700">Clifton</text>
+          <text x="430" y="24" text-anchor="middle" style="fill:var(--ink)" font-size="15" font-weight="700">Saddar</text>
+          <text x="260" y="203" text-anchor="middle" style="fill:var(--ink)" font-size="15" font-weight="700">DHA</text>
+          <text x="130" y="128" style="fill:var(--accent);font-family:var(--font-mono)" font-size="14">1st: cost 2 ✓</text>
+          <text x="352" y="128" style="fill:var(--accent);font-family:var(--font-mono)" font-size="14">2nd: cost 3 ✓</text>
+          <text x="260" y="42" text-anchor="middle" style="fill:var(--bad);font-family:var(--font-mono)" font-size="14">3rd: cost 3 ✕ loop</text>
+        </svg>
+        <figcaption>The cheap triangle in our city. After the first two roads, Clifton and Saddar are already connected through DHA, so the third road (also cost 3) would only make a loop. Kruskal skips it.</figcaption>
+      </div>
+      <h3>The "team badge" trick (Union-Find)</h3>
+      <p>How does the computer know quickly whether two places are already connected? It gives every place a <strong>team badge</strong>. At the start every place is its own team. When we keep a road, the two teams <strong>merge</strong> into one. To check a road, we just ask: "Do these two places wear the same badge?" If yes, the road would make a loop.</p>
+      <p>Two small tricks make this super fast: merge the smaller team into the bigger one (<strong>union by rank</strong>), and when you look up a badge, write the answer down so next time is instant (<strong>path compression</strong>).</p>
+      <p><span class="term"><b>DSU</b> = Disjoint Set Union = Union-Find</span><span class="term"><b>MST</b> = minimum spanning tree</span><span class="term"><b>MSF</b> = minimum spanning forest</span></p>
+      <h3>Tree or forest?</h3>
+      <p>If all places can be joined, the result is one connected <strong>tree</strong> of roads. Our city has islands, so we get one small tree per island. Several trees together are called a <strong>forest</strong>. We never invent a road between islands.</p>
+      <h3>Why being greedy is safe here</h3>
+      <p>Normally being greedy can trick you. Here it is <strong>proven safe</strong>: if you split the places into two sides, the cheapest road crossing between them can always be part of a cheapest plan. If some "best plan" didn't use it, you could swap it in for a more expensive crossing road and the plan would get cheaper or stay the same. Kruskal always picks exactly that cheapest crossing road. This is called the <strong>cut property</strong>.</p>
+      <h3>What we got</h3>
+      <div class="stats">
+        <div class="stat"><div class="v">9</div><div class="l">roads kept</div></div>
+        <div class="stat"><div class="v">36</div><div class="l">total cost</div></div>
+        <div class="stat"><div class="v">3</div><div class="l">islands (components)</div></div>
+        <div class="stat"><div class="v">3</div><div class="l">roads skipped as loops before the forest was complete</div></div>
+      </div>
+      <p>Of the 20 open roads, Kruskal checked them in cost order and kept 9. The other 11 were skipped because each would have made a loop.</p>
+      <h3>Fixing broken roads (incremental repair)</h3>
+      <p>If a road in our plan breaks, we don't have to start from zero:</p>
+      <ol class="steps">
+        <li>Remove the broken road. Its tree splits into two halves.</li>
+        <li>Look at every remaining open road and find the <strong>cheapest one that joins the two halves</strong>.</li>
+        <li>If one exists, add it. If none exists, the island really has split in two.</li>
+        <li>If the broken road was not in our plan at all, nothing needs fixing.</li>
+      </ol>
+      <p>We always check the repaired plan against a full Kruskal restart to prove it costs exactly the same.</p>
+    </section>
+
+    <!-- 6 -->
+    <section id="link">
+      <p class="eyebrow">Chapter 6</p>
+      <h2>The island rule: how the two puzzles connect</h2>
+      <p>A car can only charge at a station it can <strong>drive to</strong>. In our model that means the station must be on the <strong>same island</strong> (same connected group) as the place the car starts from.</p>
+      <ul>
+        <li>A car in Saddar can use Clifton's station (ST1) or Gulshan's station (ST2), both in the main group.</li>
+        <li>A car in Malir, Airport or Landhi can only use Malir's station (ST3).</li>
+        <li>A car in Surjani Town can't reach any station.</li>
+      </ul>
+      <p>So puzzle A (roads) decides <strong>who is allowed</strong> to use which station, and puzzle B (energy) decides <strong>who actually gets</strong> energy. That is the link between the two halves of the project.</p>
+      <p>Before sharing energy, we label the cars that can never be served:</p>
+      <ul>
+        <li><span class="pill" style="color:var(--pink)">No eligible station</span>: no station on its island (Surjani's car, EV24).</li>
+        <li><span class="pill" style="color:var(--bad)">Too large</span>: bigger than every station it could reach (EV08 and EV20).</li>
+        <li><span class="pill" style="color:var(--muted)">Origin removed</span>: its home place was deleted (only in experiment E3).</li>
+      </ul>
+      <p>Any car that could fit but still doesn't get energy is labelled <span class="pill" style="color:var(--warn)">Capacity competition</span>: others were a better use of the limited energy.</p>
+    </section>
+
+    <!-- 7 -->
+    <section id="dp">
+      <p class="eyebrow">Chapter 7 · Part B</p>
+      <h2>Sharing energy: dynamic programming</h2>
+      <h3>Why not just be greedy again?</h3>
+      <p>Here greedy can be fooled. Say a station holds 50 units:</p>
+      <ul>
+        <li>Car A needs 50 units and brings 100 points.</li>
+        <li>Cars B and C need 20 units each and bring 60 points each.</li>
+      </ul>
+      <p>Greedy grabs the biggest prize, car A: <strong>100 points</strong>. But B and C together fit and give <strong>120 points</strong>. Greedy lost. We needed a method that never misses the best answer.</p>
+      <h3>The backpack puzzle (knapsack)</h3>
+      <p>This is a famous puzzle called the <strong>knapsack problem</strong>. Ours has several backpacks (stations), so it is the <strong>multiple knapsack</strong> problem. Every car is all-or-nothing, which makes it the <strong>0/1</strong> version.</p>
+      <h3>How dynamic programming solves it</h3>
+      <div class="kid">
+        <span class="tag">Like you're ten</span>
+        <p>Imagine a notebook. On each page you write: "If the backpacks still had <em>this much</em> space, and I had only looked at the first few toys, the best fun I could get is <em>this</em>." You fill the pages one toy at a time. For each new toy you ask just two questions: is it better to <strong>skip</strong> this toy, or to <strong>put it in one of the backpacks</strong> that has room? You look up the earlier page to answer. When you reach the last toy, the answer is waiting on the last page.</p>
+      </div>
+      <p>The grown-up version:</p>
+      <ul>
+        <li><strong>The question (state):</strong> best score using the first <em>i</em> cars when station 1 has <em>c₁</em> units left, station 2 has <em>c₂</em>, station 3 has <em>c₃</em>.</li>
+        <li><strong>The starting page:</strong> with no cars, the score is 0.</li>
+        <li><strong>The choice for each car:</strong> skip it, or give it to one eligible station that still has room (score goes up by the car's benefit, that station's space goes down by the car's size).</li>
+        <li><strong>The answer:</strong> the page for "all cars, all stations full size".</li>
+        <li><strong>Who got what:</strong> we wrote down every choice, so we walk backwards from the answer and read off which car went where (<strong>backtracking</strong>).</li>
+      </ul>
+      <p>Because each car is decided <strong>once</strong>, and the choice is "skip" or "exactly one station", a car can never be given two stations.</p>
+      <h3>How big is the notebook?</h3>
+      <p>Station sizes are 12, 9 and 7 units. Each can have 0 to 12, 0 to 9, or 0 to 7 units left, so one page per car has 13 × 10 × 8 = <strong>1,040</strong> boxes. With 21 cars going into the DP, plus the starting page, that is 22 × 1,040 = <strong>22,880</strong> boxes, about 206 KB of memory. A computer fills that in well under a millisecond.</p>
+      <p>Add a 4th station (Korangi, 5 units) and each page grows 6 times to <strong>6,240</strong> boxes. That is why we keep the number of stations small: every new station multiplies the notebook size.</p>
+      <h3>Tie rule</h3>
+      <p>If two choices give the same score, we prefer the one that serves <strong>more cars</strong>. If it's still a tie, we prefer the <strong>lower station number</strong>. This keeps the answer the same every time.</p>
+      <h3>What we got (baseline)</h3>
+      <div class="figure">
+        <div class="packs">
+          <div class="pack-row">
+            <div class="pack-name">ST1 Clifton<small>12 / 12 units</small></div>
+            <div class="cells">
+              <div class="car s1 unit" style="width:calc(2*34px + 3px)">EV11</div>
+              <div class="car s1 unit" style="width:calc(2*34px + 3px)">EV12</div>
+              <div class="car s1 unit" style="width:calc(3*34px + 6px)">EV13</div>
+              <div class="car s1 unit" style="width:calc(3*34px + 6px)">EV15</div>
+              <div class="car s1 unit" style="width:calc(2*34px + 3px)">EV16</div>
+            </div>
+          </div>
+          <div class="pack-row">
+            <div class="pack-name">ST2 Gulshan-e-Iqbal<small>9 / 9 units</small></div>
+            <div class="cells">
+              <div class="car s2 unit" style="width:calc(2*34px + 3px)">EV04</div>
+              <div class="car s2 unit" style="width:calc(2*34px + 3px)">EV07</div>
+              <div class="car s2 unit" style="width:calc(2*34px + 3px)">EV09</div>
+              <div class="car s2 unit" style="width:calc(3*34px + 6px)">EV10</div>
+            </div>
+          </div>
+          <div class="pack-row">
+            <div class="pack-name">ST3 Malir<small>7 / 7 units</small></div>
+            <div class="cells">
+              <div class="car s3 unit" style="width:calc(2*34px + 3px)">EV18</div>
+              <div class="car s3 unit" style="width:calc(2*34px + 3px)">EV19</div>
+              <div class="car s3 unit" style="width:calc(3*34px + 6px)">EV23</div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Each block width is the car's size in units. All three stations are filled exactly to the top. 12 of 24 cars are served, for a total benefit of 815.</figcaption>
+      </div>
+      <p>The other 12 cars: 9 lost to capacity competition (EV01, EV02, EV03, EV05, EV06, EV14, EV17, EV21, EV22), 2 were too large (EV08, EV20) and 1 had no reachable station (EV24).</p>
+    </section>
+
+    <!-- 8 -->
+    <section id="check">
+      <p class="eyebrow">Chapter 8</p>
+      <h2>How we know it's right</h2>
+      <h3>1. Brute force: try every single possibility</h3>
+      <p>For small puzzles (up to 10 cars), a second program simply tries <strong>every possible way</strong> to place the cars, checks which ones fit, and keeps the best. It is slow but impossible to fool. With 3 stations each car has 4 choices (skip, ST1, ST2, ST3), so 10 cars give 4<sup>10</sup> = <strong>1,048,576</strong> ways.</p>
+      <p>We made 200 random small puzzles and solved each with both methods. They agreed <strong>200 out of 200</strong> times.</p>
+      <p>For our real city with 24 cars, brute force would need 4<sup>24</sup> ≈ 280 trillion tries. That is why we need dynamic programming.</p>
+      <h3>2. Checkers (validators)</h3>
+      <p>After every run, separate checker code re-checks the answer from scratch:</p>
+      <ul>
+        <li>Roads: no closed road used, no loops, every island fully connected, cost added up again.</li>
+        <li>Energy: no car used twice, no station overfilled, every car at a station it can reach, total score added up again.</li>
+      </ul>
+      <h3>3. Automatic tests</h3>
+      <p>We wrote <strong>333 automatic tests</strong>. They check the city's design, bad input files getting rejected, the road plan matching a well-known library (used only in tests), the tie rules, repairs on 60 random cities, and more. All 333 pass.</p>
+      <h3>4. The greedy shortcut, for comparison</h3>
+      <p>We also built a quick greedy shortcut for energy (best points per unit first). On our city it scored <strong>781</strong> against the DP's <strong>815</strong>. On 139 random puzzles it was perfect 97 times but lost 6.2% on average and up to 58.8% in the worst case. So it's fast but can't be trusted to be best.</p>
+    </section>
+
+    <!-- 9 -->
+    <section id="experiments">
+      <p class="eyebrow">Chapter 9</p>
+      <h2>The five experiments</h2>
+      <p>One program, <code>run_all.py</code>, runs all experiments and writes every number to files. We never type a result by hand.</p>
+
+      <div class="figure">
+        <div class="seg" role="group" aria-label="Choose experiment">
+          <button type="button" id="b-e1" aria-pressed="true">E1 Baseline</button>
+          <button type="button" id="b-e2" aria-pressed="false">E2 Three roads break</button>
+          <button type="button" id="b-e3" aria-pressed="false">E3 Top 2 removed</button>
+        </div>
+        <div class="scroll-x"><svg id="map" viewBox="0 0 760 470" role="img" aria-label="Map of the 12 sites and their roads"></svg></div>
+        <div class="legend">
+          <span><svg class="swatch" viewBox="0 0 22 6"><line x1="1" y1="3" x2="21" y2="3" class="r-forest"/></svg>Kept road</span>
+          <span><svg class="swatch" viewBox="0 0 22 6"><line x1="1" y1="3" x2="21" y2="3" class="r-repl"/></svg>Replacement road</span>
+          <span><svg class="swatch" viewBox="0 0 22 6"><line x1="1" y1="3" x2="21" y2="3" class="r-idle" style="opacity:1"/></svg>Open, not needed</span>
+          <span><svg class="swatch" viewBox="0 0 22 6"><line x1="1" y1="3" x2="21" y2="3" class="r-closed"/></svg>Closed road</span>
+          <span><svg class="swatch" viewBox="0 0 22 6"><line x1="1" y1="3" x2="21" y2="3" class="r-failed"/></svg>Broken road</span>
+          <span>■ station &nbsp; ★ hub</span>
+        </div>
+        <p class="caption" id="map-caption" aria-live="polite"></p>
+      </div>
+
+      <h3>E1 · Baseline: the normal city</h3>
+      <p>Everything as designed. Result: 9 roads with cost <strong>36</strong> and 3 islands; 12 of 24 cars served, benefit <strong>815</strong>, all 28 units used. In a bonus "stress run" we switched on the spare station at Korangi (k = 4). Then <strong>14</strong> cars are served and the benefit rises to <strong>863</strong>, but the notebook grows from 1,040 to 6,240 boxes per page.</p>
+
+      <h3>E2 · Three roads break</h3>
+      <p>We picked three roads <strong>before</strong> the experiment, each one testing a different case:</p>
+      <ul>
+        <li><strong>R06 PECHS–Gulshan</strong> was in our plan, and another road can replace it. Repair adds <strong>R11 PECHS–North Nazimabad</strong> (cost 6).</li>
+        <li><strong>R20 Airport–Landhi</strong> was in our plan, and nothing can replace it. Landhi becomes its own island.</li>
+        <li><strong>R07 Clifton–PECHS</strong> was not in our plan, so nothing changes.</li>
+      </ul>
+      <p>The repaired plan costs <strong>33</strong>, exactly what a full restart gives, with the very same roads. Benefit drops to 773 because Landhi's cars lost their station.</p>
+
+      <h3>E3 · Remove the two most important places</h3>
+      <p>We deleted Gulshan-e-Iqbal and DHA (severity 10 and 9), all 11 of their roads, and the station at Gulshan. Then we ran both puzzles again.</p>
+      <ul>
+        <li>The road cost drops to <strong>27</strong> (fewer places to connect), but there are now <strong>4 islands</strong>: Gulistan-e-Johar's only road went through Gulshan, so Johar is cut off.</li>
+        <li>Total station space drops from 28 to <strong>19</strong> units. Only <strong>8</strong> cars are served, benefit <strong>540</strong>.</li>
+      </ul>
+      <p>Lesson: removing an important place can split the map and take a station with it. Note that Kruskal only uses severity to break ties; it does not try to protect important places.</p>
+
+      <h3>E4 · Less energy, more cars</h3>
+      <div class="scroll-x">
+        <table>
+          <thead><tr><th>Scenario</th><th class="num">Station units</th><th class="num">Served</th><th class="num">Benefit</th></tr></thead>
+          <tbody>
+            <tr><td>E1 Baseline</td><td class="num">12 + 9 + 7 = 28</td><td class="num">12</td><td class="num">815</td></tr>
+            <tr><td>E4a every station 25% smaller</td><td class="num">9 + 7 + 5 = 21</td><td class="num">9</td><td class="num">668</td></tr>
+            <tr><td>E4b 6 extra cars (EV25–EV30)</td><td class="num">28</td><td class="num">12</td><td class="num">841</td></tr>
+            <tr><td>E4c both together</td><td class="num">21</td><td class="num">9</td><td class="num">675</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Less energy means fewer happy cars. More cars with the same energy lets DP pick better ones, so the benefit goes <em>up</em> (841) even though the same number are served.</p>
+
+      <h3>E5 · Bigger cities and bigger puzzles</h3>
+      <p>We made random cities of 20, 50, 100 and 200 places and timed everything (the middle value of 20 runs, called the <strong>median</strong>).</p>
+      <ul>
+        <li><strong>Repair vs restart:</strong> on 200 places, repairing 3 broken roads took about 0.33 ms, against about 1.03 ms for a full Kruskal restart. Both always gave the same cost. We measured this instead of assuming it.</li>
+        <li><strong>Notebook growth:</strong> doubling the station sizes again and again (×1, ×2, ×4, ×8) grew the notebook from 1,040 to 403,617 boxes per page, and memory from 234 KB to 90.8 MB. Bigger numbers mean a bigger notebook. That is what "<strong>pseudo-polynomial</strong>" means.</li>
+        <li><strong>Brute force vs DP:</strong> at 10 cars, brute force tried 1,048,576 ways in about 1.6 seconds; DP took about 0.24 ms.</li>
+      </ul>
+      <p class="caption">Timings depend on the computer and change slightly on every run. The dashboard always shows the latest run.</p>
+    </section>
+
+    <!-- 10 -->
+    <section id="edge">
+      <p class="eyebrow">Chapter 10</p>
+      <h2>The three tricky cases the course asks for</h2>
+      <p>The course says three special cases must run in our code with real printed output. They are saved in <code>output/edge_cases.log</code> and shown in the dashboard.</p>
+      <ol class="steps">
+        <li><strong>Disconnected map.</strong> Closed roads R21–R24 are thrown away first. We get a forest of 9 roads over 3 islands, each listed by name, and Surjani Town is marked "isolated". No fake road is invented.</li>
+        <li><strong>Too much demand.</strong> The main group wants 37 units but has 21; the cut-off group wants 15 but has 7. Every station stays within its limit, and the 9 cars that lost out are listed.</li>
+        <li><strong>A car that's too big.</strong> EV08 needs 14 units but its stations hold 12 and 9. EV20 needs 9 but Malir holds 7. Both are labelled "too large" and never assigned.</li>
+      </ol>
+      <p>We also show: the loop being skipped, the tie rule, the "one car, one station" guard, zero cars, a zero-size station, and a repair with one broken road inside the plan and one outside.</p>
+    </section>
+
+    <!-- 11 -->
+    <section id="steps">
+      <p class="eyebrow">Chapter 11</p>
+      <h2>The steps we took, in order</h2>
+      <ol class="steps">
+        <li><strong>Set up the project.</strong> Folders, the rules file (<code>CLAUDE.md</code>), the list of tools needed, and the project PDFs.</li>
+        <li><strong>Built the pretend city</strong> and a test that checks every design property. We found the draft plan's "about 45 units of demand" was not enough to create real over-demand, so we raised it.</li>
+        <li><strong>Roads part:</strong> team badges (Union-Find), reading and checking the files, throwing away closed roads, and Kruskal. Tested against a trusted library.</li>
+        <li><strong>Energy part:</strong> the island rule and the DP notebook with backtracking.</li>
+        <li><strong>Brute force</strong>, and a test proving DP agrees with it on 151 random puzzles.</li>
+        <li><strong>Road repair</strong>, tested against full Kruskal on our city and 60 random cities.</li>
+        <li><strong>Checkers and experiments:</strong> <code>run_all.py</code> runs E1 to E5 and writes all tables and charts.</li>
+        <li><strong>The edge-case log</strong> with the three required cases.</li>
+        <li><strong>Extras:</strong> the greedy shortcut for comparison, the charts, and finally the dashboard website.</li>
+        <li><strong>Report support:</strong> a notes file with step-by-step recipes (pseudocode), proofs and speed analysis, plus all figures and results copied into <code>report/</code>.</li>
+      </ol>
+      <p>Each step was saved separately in Git and pushed to GitHub, so the history shows how the project grew.</p>
+    </section>
+
+    <!-- 12 -->
+    <section id="ui">
+      <p class="eyebrow">Chapter 12</p>
+      <h2>Tour of the dashboard</h2>
+      <p>The dashboard is a website (built with Next.js) that reads one file, <code>results.json</code>, made by <code>run_all.py</code>. It has a dark look with glowing colours. Here is the layout, then what each part means.</p>
+      <div class="figure">
+        <div class="wire" aria-hidden="true">
+          <div class="side">Side menu</div>
+          <div class="hl">① Title + 8 number cards</div>
+          <div>② Road map (E1 / E2 / E3)</div>
+          <div>③ Energy sharing (k = 3 / k = 4)</div>
+          <div>④ E4 chart + table</div>
+          <div>⑤ E5 four speed cards</div>
+          <div>⑥ "CEP edge cases" drawer</div>
+        </div>
+        <p class="caption">On a phone, the side menu becomes a strip of buttons along the top.</p>
+      </div>
+
+      <div class="tour">
+        <div class="tour-item">
+          <h3><span class="n">⓪</span> Side menu</h3>
+          <p>Click a name to jump to that part. The part you are reading lights up in cyan. "CEP edge cases" opens the drawer (⑥). The note at the bottom reminds you the data is pretend and comes from <code>results.json</code>.</p>
+        </div>
+        <div class="tour-item">
+          <h3><span class="n">①</span> Title and number cards</h3>
+          <p>Eight cards give the big picture at a glance:</p>
+          <ul>
+            <li><strong>Sites</strong> 12 and how many islands. <strong>Roads</strong> 20 / 24 open.</li>
+            <li><strong>Forest cost</strong> 36 with 9 roads kept.</li>
+            <li><strong>Active stations</strong> 3, with 28 units in total.</li>
+            <li><strong>Requests served</strong> 12 / 24, with how full the stations are (100%).</li>
+            <li><strong>Total benefit</strong> 815.</li>
+            <li><strong>Kruskal runtime</strong> and <strong>DP allocation</strong> time, in milliseconds (a millisecond is a thousandth of a second).</li>
+          </ul>
+        </div>
+        <div class="tour-item">
+          <h3><span class="n">②</span> Road network map</h3>
+          <p>The three buttons switch between <strong>E1</strong> (normal), <strong>E2</strong> (three roads broken and repaired) and <strong>E3</strong> (top two places removed).</p>
+          <p><strong>Reading the map:</strong></p>
+          <ul>
+            <li>A <strong>circle</strong> is a place; the <strong>bigger circle</strong> is the hub, Saddar. A <strong>rounded square</strong> is a working station.</li>
+            <li>The circle's outline colour shows its <strong>island</strong>: cyan for the hub's island, purple or pink for others, grey for a place standing alone.</li>
+            <li><span class="pill" style="color:var(--accent)">Glowing cyan line</span> = a road we kept. The small number on it is its cost.</li>
+            <li><span class="pill" style="color:var(--good)">Green line</span> = the replacement road added by the repair (E2).</li>
+            <li><span class="pill" style="color:var(--muted)">Grey dashed</span> = open road we didn't need (it would make a loop).</li>
+            <li><span class="pill" style="color:var(--bad)">Red dotted</span> = closed road. <span class="pill" style="color:var(--bad)">Red dashed with ✕</span> = road that broke in E2.</li>
+            <li>Faded places and very faint lines = removed in E3.</li>
+          </ul>
+          <p><strong>Hover</strong> over any place or road for details: its code, importance (severity), station size, island, or road cost and status. On a phone, the map slides sideways.</p>
+          <p><strong>The panel on the right</strong> shows forest cost, number of roads and number of islands. On E1 it shows the <strong>Kruskal trace</strong>: the roads in the order they were checked, each marked "accept" (green) or "cycle" (skipped). On E2 it lists the three broken roads and what happened to each, and compares repair against restart. On E3 it lists what was removed and the before → after numbers. At the bottom, every island is listed with its places by name.</p>
+        </div>
+        <div class="tour-item">
+          <h3><span class="n">③</span> Energy allocation</h3>
+          <p>The switch at the top changes between the normal <strong>k = 3 stations</strong> and the <strong>stress k = 4</strong> run with Korangi switched on.</p>
+          <ul>
+            <li><strong>Station bars:</strong> each bar fills up with that station's colour. "12/12 units · 100%" means completely full. An amber "at capacity" warning appears when a station is full. Under each bar, the kWh-to-units rounding is shown.</li>
+            <li><strong>Four small boxes:</strong> cars served, total benefit, energy used and how full everything is.</li>
+            <li><strong>DP state space box:</strong> the notebook size (S = boxes per page), total boxes, memory used, time taken and number of stations.</li>
+            <li><strong>Request table:</strong> all 24 cars with home place, energy, units, benefit, which stations they could reach, and the outcome.</li>
+            <li><strong>Filter chips</strong> above the table show only one kind of car: All, Served, Capacity competition, Too large, No eligible station. The small number is how many.</li>
+            <li><strong>Outcome badges:</strong> a coloured station badge (ST1 cyan, ST2 purple, ST3 pink, ST4 blue) means served there. <span class="pill" style="color:var(--warn)">Amber</span> = lost to capacity competition, <span class="pill" style="color:var(--bad)">red</span> = too large, <span class="pill" style="color:var(--pink)">pink-red</span> = no station reachable, <span class="pill" style="color:var(--muted)">grey</span> = home place removed.</li>
+          </ul>
+        </div>
+        <div class="tour-item">
+          <h3><span class="n">④</span> Sensitivity (E4)</h3>
+          <p>A bar chart of total benefit for E1, E4a, E4b and E4c. The cyan bar is the baseline; <strong>amber</strong> bars scored lower, <strong>green</strong> bars scored higher. Hover a bar to see the change from the baseline, cars served and energy used. The table next to it lists station sizes, served count, energy, how full, benefit with the change in brackets, and which cars lost out.</p>
+        </div>
+        <div class="tour-item">
+          <h3><span class="n">⑤</span> Scaling (E5)</h3>
+          <p>Four cards:</p>
+          <ul>
+            <li><strong>Repair vs full Kruskal:</strong> lines of time against city size. Green is repair, cyan is a full restart after the breaks, the grey dashed line is Kruskal on the unbroken city. The table also shows "repair / full" (below 1× means repair was faster) and a tick if the costs matched.</li>
+            <li><strong>DP memory vs capacity:</strong> bars for station sizes ×1, ×2, ×4, ×8, showing the notebook's memory. The table shows DP time for 10 to 100 cars with 3 or 4 stations.</li>
+            <li><strong>Exact DP vs brute force:</strong> red line for brute force, cyan for DP, plus how many ways brute force checked and how many times faster DP was.</li>
+            <li><strong>Verification:</strong> DP matched brute force 200 / 200, and the greedy shortcut's gap.</li>
+          </ul>
+          <div class="kid">
+            <span class="tag">How to read a "log scale"</span>
+            <p>On these charts each grid line up is <strong>10 times bigger</strong> than the one below (0.01, 0.1, 1, 10 …). This lets tiny and huge numbers fit on one chart. So a line that climbs one step means "ten times slower", not "a little slower".</p>
+          </div>
+        </div>
+        <div class="tour-item">
+          <h3><span class="n">⑥</span> CEP edge cases drawer</h3>
+          <p>Opens from the right side. It shows the three required tricky cases (Chapter 10), each with a green <strong>PASS</strong> badge when the check holds. "Show raw edge_cases.log" reveals the exact text file the program wrote. Press Esc or the ✕ to close it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section id="words">
+      <p class="eyebrow">Chapter 13</p>
+      <h2>Word list</h2>
+      <div class="scroll-x">
+        <table>
+          <thead><tr><th>Grown-up word</th><th>Simple meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Algorithm</td><td>A step-by-step recipe a computer follows.</td></tr>
+            <tr><td>Graph</td><td>Dots (places) joined by lines (roads).</td></tr>
+            <tr><td>Greedy algorithm</td><td>Always take the best-looking choice right now, never go back.</td></tr>
+            <tr><td>Kruskal's algorithm</td><td>Pick cheapest roads first, skip any that make a loop.</td></tr>
+            <tr><td>Spanning tree / forest</td><td>Fewest roads that connect everything / one such tree per island.</td></tr>
+            <tr><td>Connected component</td><td>An island: places that can reach each other by open roads.</td></tr>
+            <tr><td>Union-Find (DSU)</td><td>The "team badge" system that tells if two places are already connected.</td></tr>
+            <tr><td>Cut property</td><td>The cheapest road crossing between two halves is always safe to take.</td></tr>
+            <tr><td>Dynamic programming</td><td>Solve small versions first, write answers in a notebook, build up to the big answer.</td></tr>
+            <tr><td>0/1 multiple knapsack</td><td>Several backpacks, items you can't split, each item in at most one backpack.</td></tr>
+            <tr><td>State</td><td>One box in the notebook: "this many cars looked at, this much space left".</td></tr>
+            <tr><td>Backtracking</td><td>Reading the notebook backwards to find who got what.</td></tr>
+            <tr><td>Brute force</td><td>Try every possibility. Always right, very slow.</td></tr>
+            <tr><td>Time complexity</td><td>How the work grows when the input grows. Kruskal: about m log m for m roads. DP: q × k × S.</td></tr>
+            <tr><td>Pseudo-polynomial</td><td>Speed depends on the size of the numbers (station capacities), not just how many items there are.</td></tr>
+            <tr><td>Median</td><td>The middle value when you line up repeated timings.</td></tr>
+            <tr><td>Synthetic data</td><td>Made-up data that looks realistic.</td></tr>
+            <tr><td>Validator</td><td>A checker that re-tests the answer from scratch.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section id="limits">
+      <p class="eyebrow">Chapter 14</p>
+      <h2>What this project does not do</h2>
+      <ul>
+        <li>The data is <strong>pretend</strong>. It can't tell you real costs or real demand in Karachi.</li>
+        <li>The cheapest road plan is cheapest in <strong>cost only</strong>, not in travel time, safety or coverage.</li>
+        <li>Benefit scores are <strong>our choice</strong>. Highest total benefit doesn't mean the fairest sharing.</li>
+        <li>Rounding to 10 kWh blocks can make a car look slightly bigger than it is.</li>
+        <li>The notebook grows very fast with more stations, so exact DP works for <strong>3 or 4 stations</strong>, not 50.</li>
+        <li>Queues, charger speed, prices, power-grid limits and charging time are <strong>not modelled</strong>.</li>
+        <li>It decides how to share energy at the stations we have; it does not decide <strong>where to build new ones</strong>.</li>
+      </ul>
+    </section>
+
+    <!-- 15 -->
+    <section id="run">
+      <p class="eyebrow">Chapter 15</p>
+      <h2>How to run it yourself</h2>
+      <ol class="steps">
+        <li>Install the Python tools: <code>pip install -r requirements.txt</code></li>
+        <li>Run all the tests: <code>python -m pytest</code> (expect 333 passed)</li>
+        <li>Run all experiments: <code>python run_all.py</code> (results go to <code>output/</code>)</li>
+        <li>Copy results to the report and dashboard: <code>python scripts/build_report_assets.py</code></li>
+        <li>Start the dashboard: <code>npm --prefix dashboard install</code>, then <code>npm --prefix dashboard run dev</code>, and open <code>http://localhost:3000</code></li>
+      </ol>
+      <p>Code lives at <a href="https://github.com/M-Danish-Meraj/Smart-EV-charging-">github.com/M-Danish-Meraj/Smart-EV-charging-</a>.</p>
+    </section>
+
+    <footer>
+      Sarim Khan (CT-24266) · Muhammad Saraib (CT-24255) · Danish Meraj (CT-24268) · Muhammad Maaz Ali (CT-24265). Instructor: Miss Tooba Shaikh. All dataset values are synthetic; numbers come from <code>run_all.py</code>.
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  // Synthetic Karachi-EV-12 data (from data/*.csv) and forests (from output/results.json).
+  var sites = {
+    S01: ["Saddar", 67.0300, 24.8556], S02: ["Clifton", 67.0300, 24.8138], S03: ["DHA", 67.0650, 24.7950],
+    S04: ["PECHS", 67.0600, 24.8700], S05: ["Gulshan-e-Iqbal", 67.0950, 24.9200], S06: ["Gulistan-e-Johar", 67.1350, 24.9180],
+    S07: ["North Nazimabad", 67.0400, 24.9420], S08: ["Korangi", 67.1300, 24.8300], S09: ["Malir", 67.2000, 24.8950],
+    S10: ["Airport", 67.1650, 24.9000], S11: ["Landhi", 67.2050, 24.8450], S12: ["Surjani Town", 67.0550, 25.0300]
+  };
+  var roads = [
+    ["R01","S02","S03",2,1],["R02","S01","S03",3,1],["R03","S01","S02",3,1],["R04","S05","S06",4,1],["R05","S01","S04",4,1],
+    ["R06","S04","S05",5,1],["R07","S02","S04",5,1],["R08","S03","S08",5,1],["R09","S03","S04",6,1],["R10","S05","S07",6,1],
+    ["R11","S04","S07",6,1],["R12","S01","S05",7,1],["R13","S04","S08",7,1],["R14","S01","S07",8,1],["R15","S05","S08",8,1],
+    ["R16","S03","S05",8,1],["R17","S02","S08",9,1],["R18","S01","S08",9,1],["R19","S09","S10",3,1],["R20","S10","S11",4,1],
+    ["R21","S08","S11",2,0],["R22","S08","S09",3,0],["R23","S05","S10",6,0],["R24","S06","S09",7,0]
+  ];
+  var stations = { S02: "ST1", S05: "ST2", S09: "ST3" };
+  var scen = {
+    e1: { forest: ["R01","R02","R19","R04","R05","R20","R06","R08","R10"], failed: [], repl: [], removed: [], removedRoads: [],
+          text: "E1 baseline: 9 kept roads, total cost 36, three islands (main, Malir–Airport–Landhi, Surjani Town alone). The cheapest road of all, Korangi–Landhi (cost 2), is closed, so it is never used." },
+    e2: { forest: ["R01","R02","R19","R04","R05","R08","R10","R11"], failed: ["R06","R20","R07"], repl: ["R11"], removed: [], removedRoads: [],
+          text: "E2: R06 broke and was replaced by R11 (green). R20 broke with no replacement, so Landhi becomes its own island. R07 broke but was never in the plan. New cost 33, the same as a full restart." },
+    e3: { forest: ["R03","R19","R05","R20","R11","R13"], failed: [], repl: [], removed: ["S05","S03"],
+          removedRoads: ["R01","R02","R04","R06","R08","R09","R10","R12","R15","R16","R23"],
+          text: "E3: Gulshan-e-Iqbal and DHA are removed with their 11 roads and the Gulshan station. Cost falls to 27 but there are now 4 islands: Gulistan-e-Johar is cut off." }
+  };
+
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("map");
+  var W = 760, H = 470, pad = { l: 40, r: 150, t: 30, b: 30 };
+  var lons = [], lats = [];
+  for (var k in sites) { lons.push(sites[k][1]); lats.push(sites[k][2]); }
+  var x0 = Math.min.apply(null, lons), x1 = Math.max.apply(null, lons);
+  var y0 = Math.min.apply(null, lats), y1 = Math.max.apply(null, lats);
+  function px(id) {
+    var s = sites[id];
+    return [pad.l + (s[1] - x0) / (x1 - x0) * (W - pad.l - pad.r),
+            H - pad.b - (s[2] - y0) / (y1 - y0) * (H - pad.t - pad.b)];
+  }
+  function el(tag, attrs, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var a in attrs) {
+      // CSS variables only resolve reliably through style, not presentation attributes
+      if (String(attrs[a]).indexOf("var(") === 0) e.style.setProperty(a, attrs[a]);
+      else e.setAttribute(a, attrs[a]);
+    }
+    if (text) e.textContent = text;
+    return e;
+  }
+
+  function draw(name) {
+    var s = scen[name];
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var forest = new Set(s.forest), failed = new Set(s.failed), repl = new Set(s.repl);
+    var gone = new Set(s.removed), goneRoads = new Set(s.removedRoads);
+    var order = { "r-removed": 0, "r-idle": 1, "r-closed": 2, "r-failed": 3, "r-forest": 4, "r-repl": 5 };
+    var drawn = roads.map(function (r) {
+      var cls = goneRoads.has(r[0]) ? "r-removed" : failed.has(r[0]) ? "r-failed" : !r[4] ? "r-closed"
+              : repl.has(r[0]) ? "r-repl" : forest.has(r[0]) ? "r-forest" : "r-idle";
+      return { r: r, cls: cls };
+    }).sort(function (a, b) { return order[a.cls] - order[b.cls]; });
+    drawn.forEach(function (d) {
+      var a = px(d.r[1]), b = px(d.r[2]);
+      var line = el("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], "class": d.cls, "stroke-linecap": "round" });
+      var t = el("title", {}, d.r[0] + ": " + sites[d.r[1]][0] + " – " + sites[d.r[2]][0] + ", cost " + d.r[3]);
+      line.appendChild(t);
+      svg.appendChild(line);
+      if (d.cls === "r-forest" || d.cls === "r-repl") {
+        var mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+        svg.appendChild(el("rect", { x: mx - 10, y: my - 9, width: 20, height: 17, rx: 4, fill: "var(--surface)", stroke: "var(--line)" }));
+        svg.appendChild(el("text", { x: mx, y: my + 4, "text-anchor": "middle", fill: "var(--ink)", "font-size": 11, "font-family": "var(--font-mono)" }, String(d.r[3])));
+      }
+      if (d.cls === "r-failed") {
+        svg.appendChild(el("text", { x: (a[0] + b[0]) / 2, y: (a[1] + b[1]) / 2 + 6, "text-anchor": "middle", fill: "var(--bad)", "font-size": 18, "font-weight": 700 }, "✕"));
+      }
+    });
+    for (var id in sites) {
+      var p = px(id), off = gone.has(id), st = stations[id] && !(off);
+      var g = el("g", { opacity: off ? 0.4 : 1 });
+      if (id === "S01") {
+        g.appendChild(el("text", { x: p[0], y: p[1] + 7, "text-anchor": "middle", fill: "var(--warn)", "font-size": 22 }, "★"));
+      } else if (st) {
+        g.appendChild(el("rect", { x: p[0] - 9, y: p[1] - 9, width: 18, height: 18, rx: 4, fill: "var(--surface)", stroke: "var(--ink)", "stroke-width": 2.5 }));
+      } else {
+        g.appendChild(el("circle", { cx: p[0], cy: p[1], r: 7, fill: "var(--surface)", stroke: off ? "var(--muted)" : "var(--ink)", "stroke-width": 2.5, "stroke-dasharray": off ? "3 3" : "none" }));
+      }
+      var label = sites[id][0] + (st ? " (" + stations[id] + ")" : "") + (off ? " (removed)" : "");
+      g.appendChild(el("text", { x: p[0] + 13, y: p[1] - 7, fill: "var(--ink)", "font-size": 13, "font-weight": 700 }, label));
+      svg.appendChild(g);
+    }
+    document.getElementById("map-caption").textContent = s.text;
+    ["e1", "e2", "e3"].forEach(function (n) {
+      document.getElementById("b-" + n).setAttribute("aria-pressed", n === name ? "true" : "false");
+    });
+  }
+  ["e1", "e2", "e3"].forEach(function (n) {
+    document.getElementById("b-" + n).addEventListener("click", function () { draw(n); });
+  });
+  draw("e1");
+})();
+</script>
