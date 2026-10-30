@@ -33,4 +33,6 @@ The two sections below are copied from the brief.
 pip install -r requirements.txt
 python scripts/gen_dataset.py     # regenerates data/*.csv (deterministic; data is frozen)
 python -m pytest -v
+python run_all.py                 # E1-E5 + edge cases + figures -> output/
+python scripts/build_report_assets.py   # copy generated results into report/
 ```
