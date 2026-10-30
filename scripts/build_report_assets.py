@@ -4,7 +4,8 @@
     python scripts/build_report_assets.py
 
 Copies output/figures/*.png -> report/figures/, and output/results_summary.md
-and output/edge_cases.log -> report/generated/. Refuses to run if output/ is
+and output/edge_cases.log -> report/generated/, and output/results.json ->
+dashboard/data/results.json (the dashboard's only data source). Refuses to run if output/ is
 missing, so stale or illustrative numbers cannot end up in the report.
 """
 
@@ -32,6 +33,11 @@ def main():
     for name in ["results_summary.md", "edge_cases.log"]:
         shutil.copy2(out / name, gen / name)
         print("results ", name)
+    dash = ROOT / "dashboard" / "data"
+    if (out / "results.json").exists() and dash.parent.exists():
+        dash.mkdir(exist_ok=True)
+        shutil.copy2(out / "results.json", dash / "results.json")
+        print("dashboard results.json")
 
 
 if __name__ == "__main__":

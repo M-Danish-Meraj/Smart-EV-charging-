@@ -1,0 +1,2325 @@
+{
+ "meta": {
+  "dataset": "Karachi-EV-12",
+  "synthetic": true,
+  "timing_runs": 20,
+  "quick": false,
+  "kwh_per_unit": 10
+ },
+ "sites": [
+  {
+   "id": "S01",
+   "name": "Saddar",
+   "lat": 24.8556,
+   "lon": 67.03,
+   "severity": 6,
+   "is_hub": true
+  },
+  {
+   "id": "S02",
+   "name": "Clifton",
+   "lat": 24.8138,
+   "lon": 67.03,
+   "severity": 8,
+   "is_hub": false
+  },
+  {
+   "id": "S03",
+   "name": "DHA",
+   "lat": 24.795,
+   "lon": 67.065,
+   "severity": 9,
+   "is_hub": false
+  },
+  {
+   "id": "S04",
+   "name": "PECHS",
+   "lat": 24.87,
+   "lon": 67.06,
+   "severity": 7,
+   "is_hub": false
+  },
+  {
+   "id": "S05",
+   "name": "Gulshan-e-Iqbal",
+   "lat": 24.92,
+   "lon": 67.095,
+   "severity": 10,
+   "is_hub": false
+  },
+  {
+   "id": "S06",
+   "name": "Gulistan-e-Johar",
+   "lat": 24.918,
+   "lon": 67.135,
+   "severity": 7,
+   "is_hub": false
+  },
+  {
+   "id": "S07",
+   "name": "North Nazimabad",
+   "lat": 24.942,
+   "lon": 67.04,
+   "severity": 6,
+   "is_hub": false
+  },
+  {
+   "id": "S08",
+   "name": "Korangi",
+   "lat": 24.83,
+   "lon": 67.13,
+   "severity": 5,
+   "is_hub": false
+  },
+  {
+   "id": "S09",
+   "name": "Malir",
+   "lat": 24.895,
+   "lon": 67.2,
+   "severity": 5,
+   "is_hub": false
+  },
+  {
+   "id": "S10",
+   "name": "Airport",
+   "lat": 24.9,
+   "lon": 67.165,
+   "severity": 4,
+   "is_hub": false
+  },
+  {
+   "id": "S11",
+   "name": "Landhi",
+   "lat": 24.845,
+   "lon": 67.205,
+   "severity": 3,
+   "is_hub": false
+  },
+  {
+   "id": "S12",
+   "name": "Surjani Town",
+   "lat": 25.03,
+   "lon": 67.055,
+   "severity": 2,
+   "is_hub": false
+  }
+ ],
+ "roads": [
+  {
+   "id": "R01",
+   "u": "S02",
+   "v": "S03",
+   "cost": 2,
+   "available": true
+  },
+  {
+   "id": "R02",
+   "u": "S01",
+   "v": "S03",
+   "cost": 3,
+   "available": true
+  },
+  {
+   "id": "R03",
+   "u": "S01",
+   "v": "S02",
+   "cost": 3,
+   "available": true
+  },
+  {
+   "id": "R04",
+   "u": "S05",
+   "v": "S06",
+   "cost": 4,
+   "available": true
+  },
+  {
+   "id": "R05",
+   "u": "S01",
+   "v": "S04",
+   "cost": 4,
+   "available": true
+  },
+  {
+   "id": "R06",
+   "u": "S04",
+   "v": "S05",
+   "cost": 5,
+   "available": true
+  },
+  {
+   "id": "R07",
+   "u": "S02",
+   "v": "S04",
+   "cost": 5,
+   "available": true
+  },
+  {
+   "id": "R08",
+   "u": "S03",
+   "v": "S08",
+   "cost": 5,
+   "available": true
+  },
+  {
+   "id": "R09",
+   "u": "S03",
+   "v": "S04",
+   "cost": 6,
+   "available": true
+  },
+  {
+   "id": "R10",
+   "u": "S05",
+   "v": "S07",
+   "cost": 6,
+   "available": true
+  },
+  {
+   "id": "R11",
+   "u": "S04",
+   "v": "S07",
+   "cost": 6,
+   "available": true
+  },
+  {
+   "id": "R12",
+   "u": "S01",
+   "v": "S05",
+   "cost": 7,
+   "available": true
+  },
+  {
+   "id": "R13",
+   "u": "S04",
+   "v": "S08",
+   "cost": 7,
+   "available": true
+  },
+  {
+   "id": "R14",
+   "u": "S01",
+   "v": "S07",
+   "cost": 8,
+   "available": true
+  },
+  {
+   "id": "R15",
+   "u": "S05",
+   "v": "S08",
+   "cost": 8,
+   "available": true
+  },
+  {
+   "id": "R16",
+   "u": "S03",
+   "v": "S05",
+   "cost": 8,
+   "available": true
+  },
+  {
+   "id": "R17",
+   "u": "S02",
+   "v": "S08",
+   "cost": 9,
+   "available": true
+  },
+  {
+   "id": "R18",
+   "u": "S01",
+   "v": "S08",
+   "cost": 9,
+   "available": true
+  },
+  {
+   "id": "R19",
+   "u": "S09",
+   "v": "S10",
+   "cost": 3,
+   "available": true
+  },
+  {
+   "id": "R20",
+   "u": "S10",
+   "v": "S11",
+   "cost": 4,
+   "available": true
+  },
+  {
+   "id": "R21",
+   "u": "S08",
+   "v": "S11",
+   "cost": 2,
+   "available": false
+  },
+  {
+   "id": "R22",
+   "u": "S08",
+   "v": "S09",
+   "cost": 3,
+   "available": false
+  },
+  {
+   "id": "R23",
+   "u": "S05",
+   "v": "S10",
+   "cost": 6,
+   "available": false
+  },
+  {
+   "id": "R24",
+   "u": "S06",
+   "v": "S09",
+   "cost": 7,
+   "available": false
+  }
+ ],
+ "stations": [
+  {
+   "id": "ST1",
+   "site": "S02",
+   "capacity_kwh": 125,
+   "capacity_units": 12,
+   "active": true
+  },
+  {
+   "id": "ST2",
+   "site": "S05",
+   "capacity_kwh": 95,
+   "capacity_units": 9,
+   "active": true
+  },
+  {
+   "id": "ST3",
+   "site": "S09",
+   "capacity_kwh": 78,
+   "capacity_units": 7,
+   "active": true
+  },
+  {
+   "id": "ST4",
+   "site": "S08",
+   "capacity_kwh": 54,
+   "capacity_units": 5,
+   "active": false
+  }
+ ],
+ "e1": {
+  "forest": [
+   "R01",
+   "R02",
+   "R19",
+   "R04",
+   "R05",
+   "R20",
+   "R06",
+   "R08",
+   "R10"
+  ],
+  "cost": 36,
+  "trace": [
+   {
+    "road": "R01",
+    "accepted": true
+   },
+   {
+    "road": "R02",
+    "accepted": true
+   },
+   {
+    "road": "R03",
+    "accepted": false
+   },
+   {
+    "road": "R19",
+    "accepted": true
+   },
+   {
+    "road": "R04",
+    "accepted": true
+   },
+   {
+    "road": "R05",
+    "accepted": true
+   },
+   {
+    "road": "R20",
+    "accepted": true
+   },
+   {
+    "road": "R06",
+    "accepted": true
+   },
+   {
+    "road": "R07",
+    "accepted": false
+   },
+   {
+    "road": "R08",
+    "accepted": true
+   },
+   {
+    "road": "R09",
+    "accepted": false
+   },
+   {
+    "road": "R10",
+    "accepted": true
+   },
+   {
+    "road": "R11",
+    "accepted": false
+   },
+   {
+    "road": "R12",
+    "accepted": false
+   },
+   {
+    "road": "R13",
+    "accepted": false
+   },
+   {
+    "road": "R16",
+    "accepted": false
+   },
+   {
+    "road": "R15",
+    "accepted": false
+   },
+   {
+    "road": "R14",
+    "accepted": false
+   },
+   {
+    "road": "R17",
+    "accepted": false
+   },
+   {
+    "road": "R18",
+    "accepted": false
+   }
+  ],
+  "dropped": [
+   {
+    "road": "R21",
+    "reason": "unavailable"
+   },
+   {
+    "road": "R22",
+    "reason": "unavailable"
+   },
+   {
+    "road": "R23",
+    "reason": "unavailable"
+   },
+   {
+    "road": "R24",
+    "reason": "unavailable"
+   }
+  ],
+  "components": [
+   {
+    "label": "S01",
+    "sites": [
+     "S01",
+     "S02",
+     "S03",
+     "S04",
+     "S05",
+     "S06",
+     "S07",
+     "S08"
+    ],
+    "has_hub": true,
+    "isolated": false
+   },
+   {
+    "label": "S09",
+    "sites": [
+     "S09",
+     "S10",
+     "S11"
+    ],
+    "has_hub": false,
+    "isolated": false
+   },
+   {
+    "label": "S12",
+    "sites": [
+     "S12"
+    ],
+    "has_hub": false,
+    "isolated": true
+   }
+  ],
+  "allocation": {
+   "served": 12,
+   "requests_total": 24,
+   "benefit": 815,
+   "units": 28,
+   "kwh": 219,
+   "capacity": 28,
+   "loads": {
+    "ST1": {
+     "capacity": 12,
+     "load": 12
+    },
+    "ST2": {
+     "capacity": 9,
+     "load": 9
+    },
+    "ST3": {
+     "capacity": 7,
+     "load": 7
+    }
+   },
+   "unserved_counts": {
+    "lost_to_capacity_competition": 9,
+    "no_eligible_station": 1,
+    "too_large_for_any_eligible_station": 2
+   },
+   "dp": {
+    "states_per_layer": 1040,
+    "total_states": 22880,
+    "table_bytes": 205920
+   },
+   "requests": [
+    {
+     "id": "EV01",
+     "origin": "S01",
+     "kwh": 16,
+     "units": 2,
+     "benefit": 14,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV02",
+     "origin": "S01",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 30,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV03",
+     "origin": "S02",
+     "kwh": 20,
+     "units": 2,
+     "benefit": 18,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV04",
+     "origin": "S02",
+     "kwh": 13,
+     "units": 2,
+     "benefit": 77,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV05",
+     "origin": "S03",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 19,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV06",
+     "origin": "S03",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 28,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV07",
+     "origin": "S04",
+     "kwh": 18,
+     "units": 2,
+     "benefit": 56,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV08",
+     "origin": "S04",
+     "kwh": 135,
+     "units": 14,
+     "benefit": 90,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "too_large_for_any_eligible_station"
+    },
+    {
+     "id": "EV09",
+     "origin": "S05",
+     "kwh": 14,
+     "units": 2,
+     "benefit": 37,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV10",
+     "origin": "S05",
+     "kwh": 27,
+     "units": 3,
+     "benefit": 68,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV11",
+     "origin": "S06",
+     "kwh": 15,
+     "units": 2,
+     "benefit": 95,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV12",
+     "origin": "S06",
+     "kwh": 15,
+     "units": 2,
+     "benefit": 75,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV13",
+     "origin": "S07",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 52,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV14",
+     "origin": "S07",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 29,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV15",
+     "origin": "S08",
+     "kwh": 22,
+     "units": 3,
+     "benefit": 86,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV16",
+     "origin": "S08",
+     "kwh": 11,
+     "units": 2,
+     "benefit": 53,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV17",
+     "origin": "S09",
+     "kwh": 29,
+     "units": 3,
+     "benefit": 34,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV18",
+     "origin": "S09",
+     "kwh": 19,
+     "units": 2,
+     "benefit": 68,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV19",
+     "origin": "S09",
+     "kwh": 16,
+     "units": 2,
+     "benefit": 58,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV20",
+     "origin": "S10",
+     "kwh": 85,
+     "units": 9,
+     "benefit": 80,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "too_large_for_any_eligible_station"
+    },
+    {
+     "id": "EV21",
+     "origin": "S10",
+     "kwh": 14,
+     "units": 2,
+     "benefit": 48,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV22",
+     "origin": "S11",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 22,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV23",
+     "origin": "S11",
+     "kwh": 21,
+     "units": 3,
+     "benefit": 90,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV24",
+     "origin": "S12",
+     "kwh": 20,
+     "units": 2,
+     "benefit": 70,
+     "eligible": [],
+     "station": null,
+     "reason": "no_eligible_station"
+    }
+   ]
+  },
+  "runtime_ms": {
+   "kruskal": 0.022,
+   "allocation": 0.3772
+  },
+  "stress": {
+   "station": "ST4",
+   "allocation": {
+    "served": 14,
+    "requests_total": 24,
+    "benefit": 863,
+    "units": 33,
+    "kwh": 267,
+    "capacity": 33,
+    "loads": {
+     "ST1": {
+      "capacity": 12,
+      "load": 12
+     },
+     "ST2": {
+      "capacity": 9,
+      "load": 9
+     },
+     "ST3": {
+      "capacity": 7,
+      "load": 7
+     },
+     "ST4": {
+      "capacity": 5,
+      "load": 5
+     }
+    },
+    "unserved_counts": {
+     "lost_to_capacity_competition": 7,
+     "no_eligible_station": 1,
+     "too_large_for_any_eligible_station": 2
+    },
+    "dp": {
+     "states_per_layer": 6240,
+     "total_states": 137280,
+     "table_bytes": 1235520
+    },
+    "requests": [
+     {
+      "id": "EV01",
+      "origin": "S01",
+      "kwh": 16,
+      "units": 2,
+      "benefit": 14,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": null,
+      "reason": "lost_to_capacity_competition"
+     },
+     {
+      "id": "EV02",
+      "origin": "S01",
+      "kwh": 28,
+      "units": 3,
+      "benefit": 30,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST4",
+      "reason": null
+     },
+     {
+      "id": "EV03",
+      "origin": "S02",
+      "kwh": 20,
+      "units": 2,
+      "benefit": 18,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST4",
+      "reason": null
+     },
+     {
+      "id": "EV04",
+      "origin": "S02",
+      "kwh": 13,
+      "units": 2,
+      "benefit": 77,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST2",
+      "reason": null
+     },
+     {
+      "id": "EV05",
+      "origin": "S03",
+      "kwh": 24,
+      "units": 3,
+      "benefit": 19,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": null,
+      "reason": "lost_to_capacity_competition"
+     },
+     {
+      "id": "EV06",
+      "origin": "S03",
+      "kwh": 24,
+      "units": 3,
+      "benefit": 28,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": null,
+      "reason": "lost_to_capacity_competition"
+     },
+     {
+      "id": "EV07",
+      "origin": "S04",
+      "kwh": 18,
+      "units": 2,
+      "benefit": 56,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST2",
+      "reason": null
+     },
+     {
+      "id": "EV08",
+      "origin": "S04",
+      "kwh": 135,
+      "units": 14,
+      "benefit": 90,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": null,
+      "reason": "too_large_for_any_eligible_station"
+     },
+     {
+      "id": "EV09",
+      "origin": "S05",
+      "kwh": 14,
+      "units": 2,
+      "benefit": 37,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST2",
+      "reason": null
+     },
+     {
+      "id": "EV10",
+      "origin": "S05",
+      "kwh": 27,
+      "units": 3,
+      "benefit": 68,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST2",
+      "reason": null
+     },
+     {
+      "id": "EV11",
+      "origin": "S06",
+      "kwh": 15,
+      "units": 2,
+      "benefit": 95,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST1",
+      "reason": null
+     },
+     {
+      "id": "EV12",
+      "origin": "S06",
+      "kwh": 15,
+      "units": 2,
+      "benefit": 75,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST1",
+      "reason": null
+     },
+     {
+      "id": "EV13",
+      "origin": "S07",
+      "kwh": 28,
+      "units": 3,
+      "benefit": 52,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST1",
+      "reason": null
+     },
+     {
+      "id": "EV14",
+      "origin": "S07",
+      "kwh": 24,
+      "units": 3,
+      "benefit": 29,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": null,
+      "reason": "lost_to_capacity_competition"
+     },
+     {
+      "id": "EV15",
+      "origin": "S08",
+      "kwh": 22,
+      "units": 3,
+      "benefit": 86,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST1",
+      "reason": null
+     },
+     {
+      "id": "EV16",
+      "origin": "S08",
+      "kwh": 11,
+      "units": 2,
+      "benefit": 53,
+      "eligible": [
+       "ST1",
+       "ST2",
+       "ST4"
+      ],
+      "station": "ST1",
+      "reason": null
+     },
+     {
+      "id": "EV17",
+      "origin": "S09",
+      "kwh": 29,
+      "units": 3,
+      "benefit": 34,
+      "eligible": [
+       "ST3"
+      ],
+      "station": null,
+      "reason": "lost_to_capacity_competition"
+     },
+     {
+      "id": "EV18",
+      "origin": "S09",
+      "kwh": 19,
+      "units": 2,
+      "benefit": 68,
+      "eligible": [
+       "ST3"
+      ],
+      "station": "ST3",
+      "reason": null
+     },
+     {
+      "id": "EV19",
+      "origin": "S09",
+      "kwh": 16,
+      "units": 2,
+      "benefit": 58,
+      "eligible": [
+       "ST3"
+      ],
+      "station": "ST3",
+      "reason": null
+     },
+     {
+      "id": "EV20",
+      "origin": "S10",
+      "kwh": 85,
+      "units": 9,
+      "benefit": 80,
+      "eligible": [
+       "ST3"
+      ],
+      "station": null,
+      "reason": "too_large_for_any_eligible_station"
+     },
+     {
+      "id": "EV21",
+      "origin": "S10",
+      "kwh": 14,
+      "units": 2,
+      "benefit": 48,
+      "eligible": [
+       "ST3"
+      ],
+      "station": null,
+      "reason": "lost_to_capacity_competition"
+     },
+     {
+      "id": "EV22",
+      "origin": "S11",
+      "kwh": 28,
+      "units": 3,
+      "benefit": 22,
+      "eligible": [
+       "ST3"
+      ],
+      "station": null,
+      "reason": "lost_to_capacity_competition"
+     },
+     {
+      "id": "EV23",
+      "origin": "S11",
+      "kwh": 21,
+      "units": 3,
+      "benefit": 90,
+      "eligible": [
+       "ST3"
+      ],
+      "station": "ST3",
+      "reason": null
+     },
+     {
+      "id": "EV24",
+      "origin": "S12",
+      "kwh": 20,
+      "units": 2,
+      "benefit": 70,
+      "eligible": [],
+      "station": null,
+      "reason": "no_eligible_station"
+     }
+    ]
+   },
+   "runtime_ms": 1.4861
+  }
+ },
+ "e2": {
+  "cost_before": 36,
+  "failed": [
+   {
+    "road": "R06",
+    "role": "in_forest_with_replacement",
+    "action": "replaced",
+    "replacement": "R11"
+   },
+   {
+    "road": "R20",
+    "role": "in_forest_no_replacement",
+    "action": "split",
+    "replacement": null
+   },
+   {
+    "road": "R07",
+    "role": "not_in_forest",
+    "action": "not_in_forest",
+    "replacement": null
+   }
+  ],
+  "repair_cost": 33,
+  "full_cost": 33,
+  "forest": [
+   "R01",
+   "R02",
+   "R19",
+   "R04",
+   "R05",
+   "R08",
+   "R10",
+   "R11"
+  ],
+  "full_forest": [
+   "R01",
+   "R02",
+   "R19",
+   "R04",
+   "R05",
+   "R08",
+   "R10",
+   "R11"
+  ],
+  "components": [
+   {
+    "label": "S01",
+    "sites": [
+     "S01",
+     "S02",
+     "S03",
+     "S04",
+     "S05",
+     "S06",
+     "S07",
+     "S08"
+    ],
+    "has_hub": true,
+    "isolated": false
+   },
+   {
+    "label": "S09",
+    "sites": [
+     "S09",
+     "S10"
+    ],
+    "has_hub": false,
+    "isolated": false
+   },
+   {
+    "label": "S11",
+    "sites": [
+     "S11"
+    ],
+    "has_hub": false,
+    "isolated": true
+   },
+   {
+    "label": "S12",
+    "sites": [
+     "S12"
+    ],
+    "has_hub": false,
+    "isolated": true
+   }
+  ],
+  "runtime_ms": {
+   "repair": 0.0135,
+   "full": 0.0183
+  },
+  "allocation": {
+   "served": 12,
+   "requests_total": 24,
+   "benefit": 773,
+   "units": 27,
+   "kwh": 212,
+   "capacity": 28,
+   "loads": {
+    "ST1": {
+     "capacity": 12,
+     "load": 12
+    },
+    "ST2": {
+     "capacity": 9,
+     "load": 9
+    },
+    "ST3": {
+     "capacity": 7,
+     "load": 6
+    }
+   },
+   "unserved_counts": {
+    "lost_to_capacity_competition": 7,
+    "no_eligible_station": 3,
+    "too_large_for_any_eligible_station": 2
+   },
+   "dp": {
+    "states_per_layer": 1040,
+    "total_states": 20800,
+    "table_bytes": 187200
+   },
+   "requests": [
+    {
+     "id": "EV01",
+     "origin": "S01",
+     "kwh": 16,
+     "units": 2,
+     "benefit": 14,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV02",
+     "origin": "S01",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 30,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV03",
+     "origin": "S02",
+     "kwh": 20,
+     "units": 2,
+     "benefit": 18,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV04",
+     "origin": "S02",
+     "kwh": 13,
+     "units": 2,
+     "benefit": 77,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV05",
+     "origin": "S03",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 19,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV06",
+     "origin": "S03",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 28,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV07",
+     "origin": "S04",
+     "kwh": 18,
+     "units": 2,
+     "benefit": 56,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV08",
+     "origin": "S04",
+     "kwh": 135,
+     "units": 14,
+     "benefit": 90,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "too_large_for_any_eligible_station"
+    },
+    {
+     "id": "EV09",
+     "origin": "S05",
+     "kwh": 14,
+     "units": 2,
+     "benefit": 37,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV10",
+     "origin": "S05",
+     "kwh": 27,
+     "units": 3,
+     "benefit": 68,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST2",
+     "reason": null
+    },
+    {
+     "id": "EV11",
+     "origin": "S06",
+     "kwh": 15,
+     "units": 2,
+     "benefit": 95,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV12",
+     "origin": "S06",
+     "kwh": 15,
+     "units": 2,
+     "benefit": 75,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV13",
+     "origin": "S07",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 52,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV14",
+     "origin": "S07",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 29,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV15",
+     "origin": "S08",
+     "kwh": 22,
+     "units": 3,
+     "benefit": 86,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV16",
+     "origin": "S08",
+     "kwh": 11,
+     "units": 2,
+     "benefit": 53,
+     "eligible": [
+      "ST1",
+      "ST2"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV17",
+     "origin": "S09",
+     "kwh": 29,
+     "units": 3,
+     "benefit": 34,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV18",
+     "origin": "S09",
+     "kwh": 19,
+     "units": 2,
+     "benefit": 68,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV19",
+     "origin": "S09",
+     "kwh": 16,
+     "units": 2,
+     "benefit": 58,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV20",
+     "origin": "S10",
+     "kwh": 85,
+     "units": 9,
+     "benefit": 80,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "too_large_for_any_eligible_station"
+    },
+    {
+     "id": "EV21",
+     "origin": "S10",
+     "kwh": 14,
+     "units": 2,
+     "benefit": 48,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV22",
+     "origin": "S11",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 22,
+     "eligible": [],
+     "station": null,
+     "reason": "no_eligible_station"
+    },
+    {
+     "id": "EV23",
+     "origin": "S11",
+     "kwh": 21,
+     "units": 3,
+     "benefit": 90,
+     "eligible": [],
+     "station": null,
+     "reason": "no_eligible_station"
+    },
+    {
+     "id": "EV24",
+     "origin": "S12",
+     "kwh": 20,
+     "units": 2,
+     "benefit": 70,
+     "eligible": [],
+     "station": null,
+     "reason": "no_eligible_station"
+    }
+   ]
+  }
+ },
+ "e3": {
+  "removed_sites": [
+   "S05",
+   "S03"
+  ],
+  "removed_roads": [
+   "R01",
+   "R02",
+   "R04",
+   "R06",
+   "R08",
+   "R09",
+   "R10",
+   "R12",
+   "R15",
+   "R16",
+   "R23"
+  ],
+  "deactivated_stations": [
+   "ST2"
+  ],
+  "cost": 27,
+  "forest": [
+   "R03",
+   "R19",
+   "R05",
+   "R20",
+   "R11",
+   "R13"
+  ],
+  "components": [
+   {
+    "label": "S01",
+    "sites": [
+     "S01",
+     "S02",
+     "S04",
+     "S07",
+     "S08"
+    ],
+    "has_hub": true,
+    "isolated": false
+   },
+   {
+    "label": "S06",
+    "sites": [
+     "S06"
+    ],
+    "has_hub": false,
+    "isolated": true
+   },
+   {
+    "label": "S09",
+    "sites": [
+     "S09",
+     "S10",
+     "S11"
+    ],
+    "has_hub": false,
+    "isolated": false
+   },
+   {
+    "label": "S12",
+    "sites": [
+     "S12"
+    ],
+    "has_hub": false,
+    "isolated": true
+   }
+  ],
+  "allocation": {
+   "served": 8,
+   "requests_total": 24,
+   "benefit": 540,
+   "units": 19,
+   "kwh": 148,
+   "capacity": 19,
+   "loads": {
+    "ST1": {
+     "capacity": 12,
+     "load": 12
+    },
+    "ST3": {
+     "capacity": 7,
+     "load": 7
+    }
+   },
+   "unserved_counts": {
+    "lost_to_capacity_competition": 7,
+    "no_eligible_station": 3,
+    "origin_site_removed": 4,
+    "too_large_for_any_eligible_station": 2
+   },
+   "dp": {
+    "states_per_layer": 104,
+    "total_states": 1664,
+    "table_bytes": 14976
+   },
+   "requests": [
+    {
+     "id": "EV01",
+     "origin": "S01",
+     "kwh": 16,
+     "units": 2,
+     "benefit": 14,
+     "eligible": [
+      "ST1"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV02",
+     "origin": "S01",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 30,
+     "eligible": [
+      "ST1"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV03",
+     "origin": "S02",
+     "kwh": 20,
+     "units": 2,
+     "benefit": 18,
+     "eligible": [
+      "ST1"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV04",
+     "origin": "S02",
+     "kwh": 13,
+     "units": 2,
+     "benefit": 77,
+     "eligible": [
+      "ST1"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV05",
+     "origin": "S03",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 19,
+     "eligible": [],
+     "station": null,
+     "reason": "origin_site_removed"
+    },
+    {
+     "id": "EV06",
+     "origin": "S03",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 28,
+     "eligible": [],
+     "station": null,
+     "reason": "origin_site_removed"
+    },
+    {
+     "id": "EV07",
+     "origin": "S04",
+     "kwh": 18,
+     "units": 2,
+     "benefit": 56,
+     "eligible": [
+      "ST1"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV08",
+     "origin": "S04",
+     "kwh": 135,
+     "units": 14,
+     "benefit": 90,
+     "eligible": [
+      "ST1"
+     ],
+     "station": null,
+     "reason": "too_large_for_any_eligible_station"
+    },
+    {
+     "id": "EV09",
+     "origin": "S05",
+     "kwh": 14,
+     "units": 2,
+     "benefit": 37,
+     "eligible": [],
+     "station": null,
+     "reason": "origin_site_removed"
+    },
+    {
+     "id": "EV10",
+     "origin": "S05",
+     "kwh": 27,
+     "units": 3,
+     "benefit": 68,
+     "eligible": [],
+     "station": null,
+     "reason": "origin_site_removed"
+    },
+    {
+     "id": "EV11",
+     "origin": "S06",
+     "kwh": 15,
+     "units": 2,
+     "benefit": 95,
+     "eligible": [],
+     "station": null,
+     "reason": "no_eligible_station"
+    },
+    {
+     "id": "EV12",
+     "origin": "S06",
+     "kwh": 15,
+     "units": 2,
+     "benefit": 75,
+     "eligible": [],
+     "station": null,
+     "reason": "no_eligible_station"
+    },
+    {
+     "id": "EV13",
+     "origin": "S07",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 52,
+     "eligible": [
+      "ST1"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV14",
+     "origin": "S07",
+     "kwh": 24,
+     "units": 3,
+     "benefit": 29,
+     "eligible": [
+      "ST1"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV15",
+     "origin": "S08",
+     "kwh": 22,
+     "units": 3,
+     "benefit": 86,
+     "eligible": [
+      "ST1"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV16",
+     "origin": "S08",
+     "kwh": 11,
+     "units": 2,
+     "benefit": 53,
+     "eligible": [
+      "ST1"
+     ],
+     "station": "ST1",
+     "reason": null
+    },
+    {
+     "id": "EV17",
+     "origin": "S09",
+     "kwh": 29,
+     "units": 3,
+     "benefit": 34,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV18",
+     "origin": "S09",
+     "kwh": 19,
+     "units": 2,
+     "benefit": 68,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV19",
+     "origin": "S09",
+     "kwh": 16,
+     "units": 2,
+     "benefit": 58,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV20",
+     "origin": "S10",
+     "kwh": 85,
+     "units": 9,
+     "benefit": 80,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "too_large_for_any_eligible_station"
+    },
+    {
+     "id": "EV21",
+     "origin": "S10",
+     "kwh": 14,
+     "units": 2,
+     "benefit": 48,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV22",
+     "origin": "S11",
+     "kwh": 28,
+     "units": 3,
+     "benefit": 22,
+     "eligible": [
+      "ST3"
+     ],
+     "station": null,
+     "reason": "lost_to_capacity_competition"
+    },
+    {
+     "id": "EV23",
+     "origin": "S11",
+     "kwh": 21,
+     "units": 3,
+     "benefit": 90,
+     "eligible": [
+      "ST3"
+     ],
+     "station": "ST3",
+     "reason": null
+    },
+    {
+     "id": "EV24",
+     "origin": "S12",
+     "kwh": 20,
+     "units": 2,
+     "benefit": 70,
+     "eligible": [],
+     "station": null,
+     "reason": "no_eligible_station"
+    }
+   ]
+  }
+ },
+ "e4": {
+  "cut_percent": 25,
+  "new_requests": [
+   {
+    "id": "EV25",
+    "origin": "S01",
+    "kwh": 18,
+    "units": 2,
+    "benefit": 48
+   },
+   {
+    "id": "EV26",
+    "origin": "S04",
+    "kwh": 14,
+    "units": 2,
+    "benefit": 60
+   },
+   {
+    "id": "EV27",
+    "origin": "S07",
+    "kwh": 26,
+    "units": 3,
+    "benefit": 29
+   },
+   {
+    "id": "EV28",
+    "origin": "S02",
+    "kwh": 13,
+    "units": 2,
+    "benefit": 18
+   },
+   {
+    "id": "EV29",
+    "origin": "S09",
+    "kwh": 11,
+    "units": 2,
+    "benefit": 61
+   },
+   {
+    "id": "EV30",
+    "origin": "S10",
+    "kwh": 28,
+    "units": 3,
+    "benefit": 47
+   }
+  ],
+  "scenarios": [
+   {
+    "label": "E1 baseline",
+    "capacities": {
+     "ST1": 12,
+     "ST2": 9,
+     "ST3": 7
+    },
+    "requests": 24,
+    "served": 12,
+    "unserved": 12,
+    "units": 28,
+    "capacity": 28,
+    "benefit": 815,
+    "lost": [
+     "EV01",
+     "EV02",
+     "EV03",
+     "EV05",
+     "EV06",
+     "EV14",
+     "EV17",
+     "EV21",
+     "EV22"
+    ]
+   },
+   {
+    "label": "E4a capacity -25%",
+    "capacities": {
+     "ST1": 9,
+     "ST2": 7,
+     "ST3": 5
+    },
+    "requests": 24,
+    "served": 9,
+    "unserved": 15,
+    "units": 21,
+    "capacity": 21,
+    "benefit": 668,
+    "lost": [
+     "EV01",
+     "EV02",
+     "EV03",
+     "EV05",
+     "EV06",
+     "EV09",
+     "EV13",
+     "EV14",
+     "EV17",
+     "EV19",
+     "EV21",
+     "EV22"
+    ]
+   },
+   {
+    "label": "E4b +6 requests",
+    "capacities": {
+     "ST1": 12,
+     "ST2": 9,
+     "ST3": 7
+    },
+    "requests": 30,
+    "served": 12,
+    "unserved": 18,
+    "units": 28,
+    "capacity": 28,
+    "benefit": 841,
+    "lost": [
+     "EV01",
+     "EV02",
+     "EV03",
+     "EV05",
+     "EV06",
+     "EV09",
+     "EV14",
+     "EV17",
+     "EV19",
+     "EV21",
+     "EV22",
+     "EV25",
+     "EV27",
+     "EV28",
+     "EV30"
+    ]
+   },
+   {
+    "label": "E4c both",
+    "capacities": {
+     "ST1": 9,
+     "ST2": 7,
+     "ST3": 5
+    },
+    "requests": 30,
+    "served": 9,
+    "unserved": 21,
+    "units": 21,
+    "capacity": 21,
+    "benefit": 675,
+    "lost": [
+     "EV01",
+     "EV02",
+     "EV03",
+     "EV05",
+     "EV06",
+     "EV09",
+     "EV13",
+     "EV14",
+     "EV16",
+     "EV17",
+     "EV19",
+     "EV21",
+     "EV22",
+     "EV25",
+     "EV27",
+     "EV28",
+     "EV29",
+     "EV30"
+    ]
+   }
+  ]
+ },
+ "e5": {
+  "network": [
+   {
+    "n": 20,
+    "m": 57,
+    "components": 1,
+    "kruskal_ms": 0.0432,
+    "repair_ms": 0.0294,
+    "full_ms": 0.0416,
+    "costs_equal": true
+   },
+   {
+    "n": 50,
+    "m": 141,
+    "components": 1,
+    "kruskal_ms": 0.1175,
+    "repair_ms": 0.1017,
+    "full_ms": 0.1687,
+    "costs_equal": true
+   },
+   {
+    "n": 100,
+    "m": 277,
+    "components": 1,
+    "kruskal_ms": 0.324,
+    "repair_ms": 0.1469,
+    "full_ms": 0.4081,
+    "costs_equal": true
+   },
+   {
+    "n": 200,
+    "m": 560,
+    "components": 1,
+    "kruskal_ms": 0.9017,
+    "repair_ms": 0.3287,
+    "full_ms": 1.027,
+    "costs_equal": true
+   }
+  ],
+  "dp": [
+   {
+    "n": 20,
+    "q": 10,
+    "k": 3,
+    "states_per_layer": 1040,
+    "total_states": 11440,
+    "dp_ms": 0.2875,
+    "table_bytes": 102960
+   },
+   {
+    "n": 20,
+    "q": 10,
+    "k": 4,
+    "states_per_layer": 6240,
+    "total_states": 68640,
+    "dp_ms": 0.7323,
+    "table_bytes": 617760
+   },
+   {
+    "n": 50,
+    "q": 25,
+    "k": 3,
+    "states_per_layer": 1040,
+    "total_states": 27040,
+    "dp_ms": 0.5372,
+    "table_bytes": 243360
+   },
+   {
+    "n": 50,
+    "q": 25,
+    "k": 4,
+    "states_per_layer": 6240,
+    "total_states": 162240,
+    "dp_ms": 1.8388,
+    "table_bytes": 1460160
+   },
+   {
+    "n": 100,
+    "q": 50,
+    "k": 3,
+    "states_per_layer": 1040,
+    "total_states": 53040,
+    "dp_ms": 1.0348,
+    "table_bytes": 477360
+   },
+   {
+    "n": 100,
+    "q": 50,
+    "k": 4,
+    "states_per_layer": 6240,
+    "total_states": 318240,
+    "dp_ms": 4.0665,
+    "table_bytes": 2864160
+   },
+   {
+    "n": 200,
+    "q": 100,
+    "k": 3,
+    "states_per_layer": 1040,
+    "total_states": 105040,
+    "dp_ms": 1.9354,
+    "table_bytes": 945360
+   },
+   {
+    "n": 200,
+    "q": 100,
+    "k": 4,
+    "states_per_layer": 6240,
+    "total_states": 630240,
+    "dp_ms": 5.868,
+    "table_bytes": 5672160
+   }
+  ],
+  "capacity": [
+   {
+    "factor": 1,
+    "capacities": [
+     12,
+     9,
+     7
+    ],
+    "states_per_layer": 1040,
+    "dp_ms": 0.5823,
+    "table_bytes": 234000
+   },
+   {
+    "factor": 2,
+    "capacities": [
+     24,
+     18,
+     14
+    ],
+    "states_per_layer": 7125,
+    "dp_ms": 1.9516,
+    "table_bytes": 1603125
+   },
+   {
+    "factor": 4,
+    "capacities": [
+     48,
+     36,
+     28
+    ],
+    "states_per_layer": 52577,
+    "dp_ms": 13.0942,
+    "table_bytes": 11829825
+   },
+   {
+    "factor": 8,
+    "capacities": [
+     96,
+     72,
+     56
+    ],
+    "states_per_layer": 403617,
+    "dp_ms": 162.1193,
+    "table_bytes": 90813825
+   }
+  ],
+  "brute": [
+   {
+    "q": 4,
+    "checked": 256,
+    "brute_ms": 0.3233,
+    "dp_ms": 0.0809,
+    "same": true
+   },
+   {
+    "q": 6,
+    "checked": 4096,
+    "brute_ms": 3.6896,
+    "dp_ms": 0.1003,
+    "same": true
+   },
+   {
+    "q": 8,
+    "checked": 65536,
+    "brute_ms": 82.4838,
+    "dp_ms": 0.2971,
+    "same": true
+   },
+   {
+    "q": 10,
+    "checked": 1048576,
+    "brute_ms": 1603.907,
+    "dp_ms": 0.242,
+    "same": true
+   }
+  ]
+ },
+ "verification": {
+  "instances": 200,
+  "agree": 200,
+  "greedy": {
+   "dataset_dp": 815,
+   "dataset_greedy": 781,
+   "random_count": 139,
+   "mean_gap_pct": 6.15,
+   "max_gap_pct": 58.82,
+   "optimal_count": 97
+  }
+ },
+ "edge_cases_log": "CT-363 CEP mandatory edge cases (generated by run_all.py on Karachi-EV-12, synthetic)\n==============================================================================\n\nCASE 1: DISCONNECTED GRAPH\n--------------------------\nUnavailable roads filtered before sorting: R21 Korangi - Landhi, R22 Korangi - Malir, R23 Gulshan-e-Iqbal - Airport, R24 Gulistan-e-Johar - Malir\nKruskal returns a minimum spanning FOREST: 9 roads, total cost 36, 3 components.\n  component S01: Saddar, Clifton, DHA, PECHS, Gulshan-e-Iqbal, Gulistan-e-Johar, North Nazimabad, Korangi [HUB component]\n  component S09: Malir, Airport, Landhi\n  component S12: Surjani Town [ISOLATED]\nNo connection invented: none of the filtered roads is in the forest -> OK\n\nCASE 2: OVER-DEMAND\n-------------------\n  component S01 (Saddar...): feasible demand 37 units vs capacity 21 units\n  component S09 (Malir...): feasible demand 15 units vs capacity 7 units\n  ST1 at Clifton: load 12 <= capacity 12 -> OK\n  ST2 at Gulshan-e-Iqbal: load 9 <= capacity 9 -> OK\n  ST3 at Malir: load 7 <= capacity 7 -> OK\n  served 12 requests, total benefit 815\n  unserved (lost to capacity competition): EV01, EV02, EV03, EV05, EV06, EV14, EV17, EV21, EV22\n\nCASE 3: TOO-HEAVY REQUEST\n-------------------------\n  EV08 at PECHS: needs 14 units (135 kWh); eligible stations ST1=12, ST2=9 units -> not assigned, reason: too_large_for_any_eligible_station\n  EV20 at Airport: needs 9 units (85 kWh); eligible stations ST3=7 units -> not assigned, reason: too_large_for_any_eligible_station\n  (and EV24 is unserved because no station is reachable: no_eligible_station)\n\nADDITIONAL CASES\n----------------\n  cycle prevention: R03 Saddar-Clifton -> rejected (cycle)\n  equal-cost tie: cost-6 roads processed in order ['R09', 'R10', 'R11']\n  duplicate-assignment guard: attractive request A fits both stations -> assignment {'B': 0, 'A': 1}, benefit 110 (A counted once)\n  zero requests: assignment {}, benefit 0\n  zero capacity: assignment {}, benefit 0\n  incremental failure: R06 (in forest) -> replaced by R11; R07 (not in forest) -> not_in_forest; repair cost 37 vs full Kruskal 37\n"
+}

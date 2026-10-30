@@ -14,7 +14,9 @@ The system solves two linked problems on one **synthetic** Karachi road network:
 pip install -r requirements.txt
 python -m pytest            # all tests
 python run_all.py           # E1-E5, verification, edge cases, figures -> output/
-python scripts/build_report_assets.py   # copy figures + results into report/
+python scripts/build_report_assets.py   # copy figures + results into report/ and dashboard/
+npm --prefix dashboard install
+npm --prefix dashboard run dev          # dashboard at http://localhost:3000
 ```
 
 ## Layout
@@ -29,6 +31,7 @@ python scripts/build_report_assets.py   # copy figures + results into report/
 | `src/validate.py`, `pipeline.py` | result validators, and the glue that runs both stages |
 | `run_all.py` | all experiments; every reported number comes from here |
 | `report/` | methods notes (pseudocode, proofs, complexity) and generated figures/results |
+| `dashboard/` | Next.js dashboard over `output/results.json` (see `dashboard/README.md`) |
 | `docs/` | original project description and proposal PDFs |
 
 All algorithms are written by hand in pure Python (NumPy only for the DP table). networkx appears only in `tests/`, as an independent cross-check.

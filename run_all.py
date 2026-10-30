@@ -8,12 +8,14 @@ Writes to output/:
     verification.md                    DP vs brute force, heuristic gap
     edge_cases.log                     the CEP-mandatory edge cases
     results_summary.md                 everything above in one file
+    results.json                       the same results as data, for the dashboard
     figures/*.png
 Every number in the report must come from these files.
 """
 
 import argparse
 import csv
+import json
 import random
 import statistics
 import time
@@ -87,6 +89,41 @@ def reason_counts(alloc):
 def utilization(alloc):
     cap = sum(alloc.capacities.values())
     return f"{100 * alloc.total_units / cap:.1f}%" if cap else "n/a"
+
+
+# ---------- JSON export (dashboard reads output/results.json) ----------
+
+def ms_num(seconds):
+    return round(seconds * 1000, 4)
+
+
+def components_json(components, hub):
+    return [{"label": c[0], "sites": c, "has_hub": hub in c, "isolated": len(c) == 1}
+            for c in components]
+
+
+def alloc_json(ds, alloc):
+    by_id = {r.request_id: r for r in ds.requests}
+    counts = {}
+    for why in alloc.unserved.values():
+        counts[why] = counts.get(why, 0) + 1
+    return {
+        "served": len(alloc.assignment),
+        "requests_total": len(ds.requests),
+        "benefit": alloc.total_benefit,
+        "units": alloc.total_units,
+        "kwh": sum(by_id[r].energy_kwh for r in alloc.assignment),
+        "capacity": sum(alloc.capacities.values()),
+        "loads": {sid: {"capacity": c, "load": alloc.loads[sid]} for sid, c in alloc.capacities.items()},
+        "unserved_counts": dict(sorted(counts.items())),
+        "dp": {"states_per_layer": alloc.dp.states_per_layer, "total_states": alloc.dp.total_states,
+               "table_bytes": alloc.dp.table_bytes},
+        "requests": [{"id": r.request_id, "origin": r.origin_id, "kwh": r.energy_kwh, "units": r.units,
+                      "benefit": r.benefit, "eligible": alloc.eligibility.eligible.get(r.request_id, []),
+                      "station": alloc.assignment.get(r.request_id),
+                      "reason": alloc.unserved.get(r.request_id)}
+                     for r in sorted(ds.requests, key=lambda r: r.request_id)],
+    }
 
 
 def alloc_items(alloc):
@@ -234,7 +271,15 @@ def e1_baseline(ds, runs, figdir):
 
     draw_network(ds, g, msf.forest, figdir / "fig_network_baseline.png",
                  f"E1 baseline minimum spanning forest (cost {msf.total_cost})")
-    return "\n".join(s), net, alloc
+    data = {"forest": [r.edge_id for r in msf.forest], "cost": msf.total_cost,
+            "trace": [{"road": t.road.edge_id, "accepted": t.accepted} for t in msf.trace],
+            "dropped": [{"road": r.edge_id, "reason": why} for r, why in g.dropped],
+            "components": components_json(msf.components, g.hub),
+            "allocation": alloc_json(ds, alloc),
+            "runtime_ms": {"kruskal": ms_num(kruskal_t), "allocation": ms_num(alloc_t)},
+            "stress": {"station": "ST4", "allocation": alloc_json(ds4, alloc4),
+                       "runtime_ms": ms_num(t4)}}
+    return "\n".join(s), net, alloc, data
 
 
 def e2_failures(ds, base_net, base_alloc, runs, figdir):
@@ -291,7 +336,17 @@ def e2_failures(ds, base_net, base_alloc, runs, figdir):
     replaced = {a.replacement.edge_id for a in rep.actions if a.replacement}
     draw_network(ds2, g, rep.forest, figdir / "fig_network_e2.png",
                  f"E2 forest after 3 road failures, repaired (cost {rep.total_cost})", replaced)
-    return "\n".join(s), alloc2
+    data = {"cost_before": msf.total_cost,
+            "failed": [{"road": a.failed.edge_id, "role": p["role"], "action": a.action,
+                        "replacement": a.replacement.edge_id if a.replacement else None}
+                       for a, p in zip(rep.actions, planned)],
+            "repair_cost": rep.total_cost, "full_cost": full.total_cost,
+            "forest": [r.edge_id for r in rep.forest],
+            "full_forest": [r.edge_id for r in full.forest],
+            "components": components_json(comps, g.hub),
+            "runtime_ms": {"repair": ms_num(rep_t), "full": ms_num(full_t)},
+            "allocation": alloc_json(ds2, alloc2)}
+    return "\n".join(s), alloc2, data
 
 
 def e3_remove_top2(ds, base_net, base_alloc, figdir):
@@ -341,7 +396,12 @@ def e3_remove_top2(ds, base_net, base_alloc, figdir):
          "tie-break in Kruskal, so Kruskal does not maximise severity coverage."]
     draw_network(ds3, net3.graph, n3.forest, figdir / "fig_network_e3.png",
                  f"E3 forest without {site_list(top2, names)} (cost {n3.total_cost})")
-    return "\n".join(s), alloc3
+    data = {"removed_sites": top2, "removed_roads": [r.edge_id for r in removed_roads],
+            "deactivated_stations": removed_stations, "cost": n3.total_cost,
+            "forest": [r.edge_id for r in n3.forest],
+            "components": components_json(n3.components, ds3.hub),
+            "allocation": alloc_json(ds3, alloc3)}
+    return "\n".join(s), alloc3, data
 
 
 def e4_capacity_demand(ds, base_alloc):
@@ -359,7 +419,7 @@ def e4_capacity_demand(ds, base_alloc):
                  (f"E4a capacity -{CAPACITY_CUT_PERCENT}%", scale_capacities(ds, CAPACITY_CUT_PERCENT)),
                  (f"E4b +{E4_NEW_REQUESTS} requests", add_requests(ds, new)),
                  ("E4c both", add_requests(scale_capacities(ds, CAPACITY_CUT_PERCENT), new))]
-    rows, unserved_rows, results = [], [], {}
+    rows, unserved_rows, results, scen_json = [], [], {}, []
     for label, d in scenarios:
         a = run_allocation(d, run_network(d))
         results[label] = a
@@ -368,6 +428,10 @@ def e4_capacity_demand(ds, base_alloc):
                      utilization(a), a.total_benefit))
         lost = sorted(r for r, why in a.unserved.items() if why == LOST)
         unserved_rows.append((label, ", ".join(lost) or "-"))
+        scen_json.append({"label": label, "capacities": a.capacities, "requests": len(d.requests),
+                          "served": len(a.assignment), "unserved": len(a.unserved),
+                          "units": a.total_units, "capacity": sum(a.capacities.values()),
+                          "benefit": a.total_benefit, "lost": lost})
 
     s = ["# E4 Capacity and demand sensitivity\n",
          f"E4a cuts every station's kWh capacity by {CAPACITY_CUT_PERCENT}% and rounds down to units. "
@@ -381,7 +445,11 @@ def e4_capacity_demand(ds, base_alloc):
                    "energy (units)", "capacity used", "benefit"], rows),
          "\n## Requests lost to capacity competition\n",
          md_table(["scenario", "requests"], unserved_rows)]
-    return "\n".join(s), results
+    data = {"cut_percent": CAPACITY_CUT_PERCENT,
+            "new_requests": [{"id": r.request_id, "origin": r.origin_id, "kwh": r.energy_kwh,
+                              "units": r.units, "benefit": r.benefit} for r in new],
+            "scenarios": scen_json}
+    return "\n".join(s), results, data
 
 
 def e5_scaling(runs, quick):
@@ -482,7 +550,12 @@ def verification(base_alloc, instances):
              ("random instances where greedy was optimal", "", "",
               f"{sum(1 for x in gaps if x == 0)} of {len(gaps)}"),
          ])]
-    return "\n".join(s), agree
+    data = {"instances": instances, "agree": agree,
+            "greedy": {"dataset_dp": base_alloc.total_benefit, "dataset_greedy": g_benefit,
+                       "random_count": len(gaps), "mean_gap_pct": round(statistics.mean(gaps), 2),
+                       "max_gap_pct": round(max(gaps), 2),
+                       "optimal_count": sum(1 for x in gaps if x == 0)}}
+    return "\n".join(s), data
 
 
 def edge_cases(ds, net, alloc):
@@ -619,12 +692,12 @@ def main(out_dir="output", quick=False):
     ds = load_dataset(ROOT / "data")
 
     sections = {}
-    sections["E1_baseline"], net, alloc = e1_baseline(ds, runs, figdir)
-    sections["E2_three_road_failure"], alloc2 = e2_failures(ds, net, alloc, runs, figdir)
-    sections["E3_remove_top2"], alloc3 = e3_remove_top2(ds, net, alloc, figdir)
-    sections["E4_capacity_demand"], e4 = e4_capacity_demand(ds, alloc)
-    sections["E5_scaling"], rows_net, _, rows_cap, rows_bf = e5_scaling(runs, quick)
-    sections["verification"], _ = verification(alloc, 40 if quick else 200)
+    sections["E1_baseline"], net, alloc, e1_json = e1_baseline(ds, runs, figdir)
+    sections["E2_three_road_failure"], alloc2, e2_json = e2_failures(ds, net, alloc, runs, figdir)
+    sections["E3_remove_top2"], alloc3, e3_json = e3_remove_top2(ds, net, alloc, figdir)
+    sections["E4_capacity_demand"], e4, e4_json = e4_capacity_demand(ds, alloc)
+    sections["E5_scaling"], rows_net, rows_dp, rows_cap, rows_bf = e5_scaling(runs, quick)
+    sections["verification"], ver_json = verification(alloc, 40 if quick else 200)
     scenarios = [("E1", alloc), ("E2", alloc2), ("E3", alloc3)] + [
         (k.split()[0], v) for k, v in e4.items() if not k.startswith("E1")]
     figures(figdir, scenarios, rows_net, rows_cap, rows_bf)
@@ -636,6 +709,31 @@ def main(out_dir="output", quick=False):
     summary = ("# Results summary (generated by run_all.py; Karachi-EV-12 is SYNTHETIC)\n\n"
                + "\n\n".join(sections.values()) + "\n\n# Edge cases\n\n```\n" + log + "```\n")
     (out / "results_summary.md").write_text(summary, encoding="utf-8")
+
+    results = {
+        "meta": {"dataset": "Karachi-EV-12", "synthetic": True, "timing_runs": runs, "quick": quick,
+                 "kwh_per_unit": KWH_PER_UNIT},
+        "sites": [{"id": l.location_id, "name": l.name, "lat": l.latitude, "lon": l.longitude,
+                   "severity": l.severity, "is_hub": l.is_hub} for l in ds.locations],
+        "roads": [{"id": r.edge_id, "u": r.u, "v": r.v, "cost": r.cost, "available": r.available}
+                  for r in ds.roads],
+        "stations": [{"id": s.station_id, "site": s.location_id, "capacity_kwh": s.capacity_kwh,
+                      "capacity_units": s.capacity_units, "active": s.active} for s in ds.stations],
+        "e1": e1_json, "e2": e2_json, "e3": e3_json, "e4": e4_json,
+        "e5": {
+            "network": [{"n": n, "m": m, "components": c, "kruskal_ms": ms_num(a), "repair_ms": ms_num(b),
+                         "full_ms": ms_num(f), "costs_equal": eq} for n, m, c, a, b, f, eq in rows_net],
+            "dp": [{"n": n, "q": q, "k": k, "states_per_layer": S, "total_states": T, "dp_ms": ms_num(t),
+                    "table_bytes": b} for n, q, k, S, T, t, b in rows_dp],
+            "capacity": [{"factor": f, "capacities": caps, "states_per_layer": S, "dp_ms": ms_num(t),
+                          "table_bytes": b} for f, caps, S, t, b in rows_cap],
+            "brute": [{"q": q, "checked": c, "brute_ms": ms_num(b), "dp_ms": ms_num(d), "same": eq}
+                      for q, c, b, d, eq in rows_bf],
+        },
+        "verification": ver_json,
+        "edge_cases_log": log,
+    }
+    (out / "results.json").write_text(json.dumps(results, indent=1), encoding="utf-8")
     print(summary)
     return sections
 
