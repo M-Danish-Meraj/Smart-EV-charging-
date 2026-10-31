@@ -1,61 +1,80 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><title>Smart EV Charging Station Planning and Energy Allocation System</title><style>
-@page { size: A4; margin: 20mm 20mm 20mm 20mm;
-  @bottom-center { content: counter(page); font: 9pt Calibri, Carlito, Arial, sans-serif; color: #555; } }
-body { font: 10.5pt/1.45 Calibri, Carlito, "Segoe UI", Arial, sans-serif; color: #1a1a1a; max-width: 170mm; margin: 0 auto; }
-h1 { font-size: 16pt; color: #1f3a5f; margin: 18pt 0 6pt; page-break-after: avoid; }
-h2 { font-size: 13pt; color: #1f3a5f; margin: 14pt 0 4pt; page-break-after: avoid; }
-h3 { font-size: 11.5pt; color: #1f3a5f; margin: 10pt 0 3pt; page-break-after: avoid; }
+@page { size: A4; margin: 22mm 18mm 20mm 18mm;
+  @top-left { content: "SMART EV CHARGING OPTIMIZER"; font: bold 7.5pt Arial, sans-serif; letter-spacing: 1.2pt; color: #1b2433; vertical-align: bottom; padding-bottom: 3mm; border-bottom: 1.4pt solid #14a37a; }
+  @top-right { content: "CEP Report \00B7 CT-363"; font: 7.5pt Arial, sans-serif; color: #6b7280; vertical-align: bottom; padding-bottom: 3mm; border-bottom: 1.4pt solid #14a37a; }
+  @bottom-left { content: "NED University of Engineering and Technology \00B7 Department of Computer Science and Information Systems"; font: 7.5pt Arial, sans-serif; color: #6b7280; vertical-align: top; padding-top: 3mm; border-top: 0.6pt solid #d1d5db; }
+  @bottom-right { content: counter(page); font: bold 8pt Arial, sans-serif; color: #1b2433; vertical-align: top; padding-top: 3mm; border-top: 0.6pt solid #d1d5db; } }
+@page :first { margin: 0; @top-left { content: none; border: 0 } @top-right { content: none; border: 0 }
+  @bottom-left { content: none; border: 0 } @bottom-right { content: none; border: 0 } }
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font: 9.6pt/1.5 Arial, "Liberation Sans", Helvetica, sans-serif; color: #1f2937; margin: 0; }
+h1 { font: bold 15pt Arial, sans-serif; color: #111827; margin: 16pt 0 8pt; padding-bottom: 4pt; border-bottom: 1.4pt solid #14a37a; page-break-after: avoid; }
+h1 .num { color: #14a37a; margin-right: 8pt; }
+h2 { font: bold 11pt Arial, sans-serif; color: #14a37a; margin: 12pt 0 4pt; page-break-after: avoid; }
+h3 { font: bold 10pt Arial, sans-serif; color: #111827; margin: 9pt 0 3pt; page-break-after: avoid; }
 p { margin: 0 0 6pt; text-align: justify; }
-ul, ol { margin: 0 0 6pt; padding-left: 18pt; } li { margin-bottom: 2pt; }
-code { font: 8.8pt Consolas, "Courier New", monospace; }
-pre { font: 8.3pt/1.3 Consolas, "Courier New", monospace; background: #f2f4f7; padding: 6pt 8pt; border-left: 3px solid #9fb3cc; white-space: pre-wrap; page-break-inside: avoid; }
-table { border-collapse: collapse; width: 100%; font-size: 8.8pt; margin: 2pt 0 10pt; page-break-inside: auto; }
+b { color: #111827; }
+ul, ol { margin: 0 0 6pt; padding-left: 16pt; } li { margin-bottom: 2pt; }
+code { font: 8.4pt Consolas, "DejaVu Sans Mono", monospace; color: #0f5132; }
+pre { font: 8pt/1.35 Consolas, "DejaVu Sans Mono", monospace; background: #0c1e38; color: #e5ecf5; padding: 7pt 9pt; border-left: 4pt solid #14a37a; white-space: pre-wrap; page-break-inside: avoid; margin: 4pt 0 8pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.4pt; margin: 2pt 0 10pt; }
 tr { page-break-inside: avoid; }
-th, td { border: 0.6pt solid #9aa5b1; padding: 2.5pt 4pt; vertical-align: top; text-align: left; }
-th { background: #d9e2f3; }
-.cap { font-weight: bold; font-size: 9.2pt; margin: 8pt 0 2pt; page-break-after: avoid; }
+th, td { padding: 3pt 5pt; vertical-align: top; text-align: left; border-bottom: 0.5pt solid #e5e7eb; }
+th { background: #0c1e38; color: #fff; font-weight: bold; border-bottom: 1.4pt solid #14a37a; }
+tbody tr:nth-child(even) td { background: #f3f6f9; }
+td:first-child { font-weight: bold; color: #111827; }
+.cap { font: bold 8.6pt Arial, sans-serif; color: #374151; margin: 8pt 0 3pt; page-break-after: avoid; }
 figure { margin: 8pt 0 10pt; text-align: center; page-break-inside: avoid; }
 figure img { max-width: 100%; }
-figcaption { font-style: italic; font-size: 9.2pt; }
-.title { text-align: center; padding-top: 10mm; }
-.title p { text-align: center; }
-.title table { width: 60%; margin: 6pt auto; font-size: 10.5pt; }
+figcaption { font-size: 8.6pt; color: #4b5563; font-style: italic; }
 .pb { page-break-after: always; }
-.toc { font-size: 10pt; line-height: 1.3; }
-.toc ol { list-style: none; padding-left: 0; margin: 0; } .toc li { margin: 0; } .toc li li { padding-left: 14pt; }
-.toc > ol > li { margin-top: 3pt; }
-</style></head><body><div class="title">
-<p style="font-size:15pt;font-weight:bold;margin-bottom:2pt">NED University of Engineering and Technology</p>
-<p style="font-size:12pt;font-weight:normal;margin-bottom:26pt">Department of Computer Science and Information Systems</p>
-<p style="font-size:12pt;font-weight:bold;margin-bottom:4pt">CT-363 Design and Analysis of Algorithms</p>
-<p style="font-size:12pt;font-weight:normal;margin-bottom:34pt">Complex Engineering Problem (CEP) Report</p>
-<p style="font-size:20pt;font-weight:bold;margin-bottom:8pt">Smart EV Charging Station Planning and Energy Allocation System</p>
-<p style="font-size:11pt;font-weight:normal;margin-bottom:34pt">Greedy minimum spanning forest + exact multi-knapsack dynamic programming on the synthetic Karachi-EV-12 dataset</p>
-<p style="font-size:11pt;font-weight:bold;margin-bottom:6pt">Submitted by</p>
-<table><tr><th>Student name</th><th>Roll number</th></tr><tr><td>Sarim Khan</td><td>CT-24266</td></tr><tr><td>Muhammad Saraib</td><td>CT-24255</td></tr><tr><td>Danish Meraj</td><td>CT-24268</td></tr><tr><td>Muhammad Maaz Ali</td><td>CT-24265</td></tr></table>
-<p style="font-size:8pt;font-weight:normal;margin-bottom:20pt"></p>
-<p style="font-size:11pt;font-weight:normal;margin-bottom:6pt">Course instructor: Miss Tooba Shaikh</p>
-<p style="font-size:11pt;font-weight:normal;margin-bottom:30pt">Date: 01 November 2026</p>
-<p style="font-size:11pt;font-weight:normal;margin-bottom:4pt">Faculty signature: ______________________</p>
-</div>
+.toc { font-size: 9.6pt; line-height: 1.35; }
+.toc a { color: #1f2937; text-decoration: none; }
+.toc ol { list-style: none; padding-left: 0; margin: 0; } .toc li { margin: 0; } .toc li li { padding-left: 16pt; color: #4b5563; }
+.toc > ol > li { margin-top: 4pt; font-weight: bold; } .toc li li a { font-weight: normal; color: #4b5563; }
+
+/* cover, modelled on the proposal */
+.cover { width: 210mm; height: 296mm; overflow: hidden; background: #0c1e38; color: #fff; position: relative;
+  box-sizing: border-box; padding: 0 16mm 0 20mm; border-left: 3mm solid #14a37a; }
+.cover .top { display: flex; align-items: center; justify-content: space-between; padding: 12mm 0 6mm;
+  border-bottom: 0.8pt solid #14a37a; }
+.cover .top img { width: 22mm; height: 22mm; }
+.cover .uni { text-align: center; }
+.cover .uni .n { font: bold 13pt Georgia, "DejaVu Serif", serif; }
+.cover .uni .d { font: 8.5pt Arial, sans-serif; color: #c7d2e0; margin-top: 2pt; }
+.cover .eyebrow { font: bold 8.5pt Arial, sans-serif; letter-spacing: 3pt; color: #14a37a; margin: 16mm 0 4mm; }
+.cover h1.t { font: bold 30pt/1.22 Georgia, "DejaVu Serif", serif; color: #fff; border: 0; margin: 0; padding: 0; }
+.cover .sub { font: bold 15pt Georgia, "DejaVu Serif", serif; color: #14a37a; margin: 5mm 0 8mm; }
+.cover .net { display: block; width: 125mm; margin: 0 auto 8mm; }
+.cover .rule { border-top: 0.6pt solid #2a3d5c; margin: 0 0 6mm; }
+.cover .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-bottom: 7mm; }
+.cover .lbl { font: bold 7.5pt Arial, sans-serif; letter-spacing: 2.5pt; color: #14a37a; margin-bottom: 2mm; }
+.cover .val { font: bold 10.5pt Arial, sans-serif; color: #fff; }
+.cover .members { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm 5mm; }
+.cover .card { background: #15294a; border-left: 1.2mm solid #14a37a; padding: 3mm 4mm; }
+.cover .card .nm { font: bold 10.5pt Arial, sans-serif; }
+.cover .card .rl { font: 8.5pt Arial, sans-serif; color: #aab6c8; margin-top: 1mm; }
+.cover .sig { position: absolute; left: 20mm; right: 16mm; bottom: 12mm; display: flex; justify-content: space-between;
+  font: 8.5pt Arial, sans-serif; color: #aab6c8; }
+</style></head><body><div class="cover"><div class="top"><img src="figures/logo_left.png" alt=""><div class="uni"><div class="n">NED University of Engineering and Technology</div><div class="d">Department of Computer Science and Information Systems</div></div><img src="figures/logo_right.png" alt=""></div><div class="eyebrow">COMPLEX ENGINEERING PROBLEM · FINAL REPORT</div><h1 class="t">Smart EV Charging Station Planning and Energy Allocation System</h1><div class="sub">for Urban Pakistan</div><img class="net" src="figures/cover_network.png" alt=""><div class="rule"></div><div class="meta"><div><div class="lbl">COURSE</div><div class="val">Design and Analysis of Algorithms · CT-363</div></div><div><div class="lbl">COURSE INSTRUCTOR</div><div class="val">Miss Tooba Shaikh</div></div></div><div class="lbl">GROUP MEMBERS</div><div class="members"><div class="card"><div class="nm">Sarim Khan</div><div class="rl">Roll No. CT-24266</div></div><div class="card"><div class="nm">Muhammad Saraib</div><div class="rl">Roll No. CT-24255</div></div><div class="card"><div class="nm">Danish Meraj</div><div class="rl">Roll No. CT-24268</div></div><div class="card"><div class="nm">Muhammad Maaz Ali</div><div class="rl">Roll No. CT-24265</div></div></div><div class="sig"><span>Date: 01 November 2026</span><span>Faculty signature: ______________________</span></div></div>
 <div class="pb"></div>
 <h1>Table of Contents</h1><div class="toc"><ol><li><a href="#s1">Abstract</a><li><a href="#s2">1. Introduction</a><ol><li><a href="#s3">1.1 Objectives</a></li></ol><li><a href="#s4">2. Literature Review</a><li><a href="#s5">3. Problem Formulation</a><ol><li><a href="#s6">3.1 Part A: minimum spanning forest</a></li><li><a href="#s7">3.2 Part B: 0/1 multiple-knapsack allocation</a></li><li><a href="#s8">3.3 Conflicting requirements</a></li></ol><li><a href="#s9">4. System Architecture</a><li><a href="#s10">5. Methodology and Pseudocode</a><ol><li><a href="#s11">5.1 Part A: Union-Find (A1)</a></li><li><a href="#s12">5.2 Part A: Kruskal minimum spanning forest (A2)</a></li><li><a href="#s13">5.3 Part A: incremental repair after road failures (A3)</a></li><li><a href="#s14">5.4 Link: eligibility (B0)</a></li><li><a href="#s15">5.5 Part B: exact multi-knapsack DP with backtracking (B1)</a></li><li><a href="#s16">5.6 Checks: brute force (B2) and greedy baseline (B3)</a></li></ol><li><a href="#s17">6. Correctness</a><ol><li><a href="#s18">6.1 Kruskal: greedy-choice property</a></li><li><a href="#s19">6.2 Kruskal: optimal substructure and the disconnected case</a></li><li><a href="#s20">6.3 Union-Find and rejection of cycles</a></li><li><a href="#s21">6.4 Incremental repair</a></li><li><a href="#s22">6.5 DP: optimal substructure and recurrence</a></li><li><a href="#s23">6.6 Tie rule and verification</a></li></ol><li><a href="#s24">7. Complexity Analysis</a><li><a href="#s25">8. Implementation and Dataset</a><ol><li><a href="#s26">8.1 The Karachi-EV-12 dataset (synthetic)</a></li><li><a href="#s27">8.2 Validation and testing</a></li><li><a href="#s28">8.3 Reproducing the results</a></li></ol><li><a href="#s29">9. Results</a><ol><li><a href="#s30">9.1 E1 Baseline: network</a></li><li><a href="#s31">9.2 E1 Baseline: allocation</a></li><li><a href="#s32">9.3 E2 Three-road failure</a></li><li><a href="#s33">9.4 E3 Removing the two highest-severity sites</a></li><li><a href="#s34">9.5 E4 Capacity and demand sensitivity</a></li><li><a href="#s35">9.6 E5 Scaling</a></li><li><a href="#s36">9.7 Verification and greedy baseline</a></li><li><a href="#s37">9.8 Mandatory edge cases</a></li></ol><li><a href="#s38">10. Conclusion and Limitations</a><ol><li><a href="#s39">10.1 Limitations</a></li><li><a href="#s40">10.2 Future work</a></li></ol><li><a href="#s41">References</a><li><a href="#s42">Appendix A. Edge-case log (generated)</a><li><a href="#s43">Appendix B. Road list</a></ol></div>
 <div class="pb"></div>
 <h1 id="s1">Abstract</h1>
 <p>This report presents a decision-support prototype that plans an electric-vehicle (EV) charging network and allocates limited charging energy, using two algorithmic paradigms. Part A uses a <b>greedy</b> algorithm, Kruskal&#x27;s algorithm with a Union-Find (disjoint-set) structure, to build a minimum spanning forest over the available roads between candidate sites; unavailable roads are filtered before sorting, equal-cost ties are broken deterministically by site severity and IDs, and the forest is repaired incrementally after road failures. Part B uses exact <b>dynamic programming</b> for the 0/1 multiple-knapsack problem: each charging request is assigned to at most one eligible station, where a station is eligible only if it lies in the same connected component as the request&#x27;s origin. On the synthetic Karachi-EV-12 dataset (12 sites, 24 roads of which 4 are unavailable, 3 active stations and 24 requests) the forest costs 36 over 3 components, and the DP serves 12 requests for a total benefit of 815 using all 28 capacity units. The DP agreed with brute force on 200 of 200 random instances, and the incremental repair matched full Kruskal in cost on every tested graph. Sensitivity experiments cover road failures, removal of the two highest-severity sites, capacity cuts, extra demand and scaling up to 200 sites. All values are model outputs on synthetic data.</p>
-<h1 id="s2">1. Introduction</h1>
+<h1 id="s2"><span class="num">01</span>Introduction</h1>
 <p>Electric-vehicle adoption requires charging infrastructure that is both cheap to connect and efficiently used. A planner must connect candidate charging sites at low cost while some roads are closed, and must then decide which charging requests each station serves when total demand exceeds the available energy. These goals conflict: the cheapest network does not maximise coverage, and serving one large request can block several smaller ones.</p>
 <p>The project solves the two problems on one dataset and links them through graph connectivity: the network stage decides which stations a request can reach, and the allocation stage decides which reachable requests are served. The system does not choose where to build stations (facility location); candidate sites are given. All data are synthetic and labelled as such.</p>
 <p>The CT-363 CEP sheet describes a flood-relief scenario. The team used EV charging as its own case study; Table 1 maps the two so that every CEP requirement has a counterpart.</p>
 <p class="cap">Table 1. Mapping between the CEP flood-relief scenario and this project.</p><table><thead><tr><th>CEP scenario</th><th>This project</th></tr></thead><tbody><tr><td>Village</td><td>Site (candidate charging location)</td></tr><tr><td>Road / submerged road</td><td>Road / unavailable road</td></tr><tr><td>Emergency operations centre (EOC)</td><td>Hub (Saddar)</td></tr><tr><td>Truck</td><td>Charging station</td></tr><tr><td>Relief item</td><td>EV charging request (one indivisible item)</td></tr><tr><td>Lives impacted</td><td>Benefit</td></tr><tr><td>Bounded / multiple knapsack</td><td>0/1 multiple knapsack (each request is one indivisible item)</td></tr></tbody></table>
 <h2 id="s3">1.1 Objectives</h2>
 <ul><li>Model sites and roads as a weighted undirected graph and build a minimum spanning tree or forest with Kruskal + DSU.</li><li>Exclude unavailable roads before sorting, use a documented deterministic tie-break, and name every component.</li><li>Repair the forest incrementally after three road failures and verify it against full recomputation.</li><li>Formulate and implement an exact multi-knapsack DP that assigns each request to at most one eligible station, with reconstruction of the assignment and an explicit reason for every unserved request.</li><li>Prove correctness, derive exact time and space complexity, and measure runtime.</li><li>Run the mandatory edge cases and the sensitivity experiments E1 to E5 reproducibly.</li></ul>
-<h1 id="s4">2. Literature Review</h1>
+<h1 id="s4"><span class="num">02</span>Literature Review</h1>
 <p><b>Minimum spanning trees.</b> The minimum spanning tree problem dates back to Borůvka (1926). Kruskal (1956) proposed scanning edges in non-decreasing weight order and keeping an edge whenever it joins two different trees; Prim (1957) grows a single tree from a start vertex. Both are justified by the cut property: the lightest edge crossing any cut that respects the current partial solution is safe [1]. On a disconnected graph Kruskal naturally returns a minimum spanning forest, one tree per component, whereas Prim must be restarted per component.</p>
 <p><b>Disjoint sets.</b> Kruskal&#x27;s efficiency depends on fast connectivity queries. With union by rank and path compression, a sequence of m operations on n elements runs in O(m α(n)) time, where α is the inverse Ackermann function (Tarjan, 1975) [1][4]. α(n) ≤ 4 for any practical n.</p>
 <p><b>Dynamic MST.</b> Maintaining an MST under edge deletions is a studied problem with sophisticated structures (Frederickson, 1985; Holm, de Lichtenberg and Thorup, 2001) [5][6]. This project deliberately uses a simple repair (find the cut created by a deleted tree edge and add the cheapest crossing edge), which is correct but not asymptotically optimal, and measures it rather than assuming a speed-up.</p>
 <p><b>Knapsack problems.</b> The 0/1 knapsack problem is NP-hard but solvable in pseudo-polynomial time by dynamic programming over capacity values [1][7]. The multiple knapsack problem, with several capacities and each item placed in at most one knapsack, is strongly NP-hard in general; exact methods include branch-and-bound and DP over the vector of remaining capacities, whose state space is the product of (C_j + 1) and therefore grows exponentially with the number of knapsacks [7][8]. This motivates the project&#x27;s restriction to k = 3 stations (k = 4 in the stress run).</p>
-<h1 id="s5">3. Problem Formulation</h1>
+<h1 id="s5"><span class="num">03</span>Problem Formulation</h1>
 <p><b>Notation.</b> n sites, m roads, q requests, k stations, used consistently in code and text.</p>
 <h2 id="s6">3.1 Part A: minimum spanning forest</h2>
 <p>Let G = (V, E) be an undirected graph with |V| = n sites and |E| = m roads. Road e = (u, v) has cost w(e) ≥ 0 and an availability flag; site v has a severity s(v). Let E_active be the available roads between active sites. The goal is a spanning forest F ⊆ E_active of minimum total cost that spans every connected component of (V, E_active). Roads are ranked by the key</p>
@@ -72,11 +91,11 @@ subject to  Σ_j x_ij ≤ 1                for every request i   (at most one st
 <p><b>Assumptions.</b> Costs and capacities are known, non-negative inputs; the graph is undirected; each request consumes its full requirement; charging time, queues, prices, grid limits and safety risk are discussed but not optimised.</p>
 <h2 id="s8">3.3 Conflicting requirements</h2>
 <p class="cap">Table 2. Conflicting engineering requirements and how each was resolved (WP2).</p><table><thead><tr><th>Conflict</th><th>Resolution in the design</th><th>Evidence from the results</th></tr></thead><tbody><tr><td>Connection cost vs coverage</td><td>Kruskal minimises total cost only; components are reported by name and maximum coverage is never claimed.</td><td>Baseline forest cost 36 leaves 3 components; Surjani Town stays unconnected.</td></tr><tr><td>Safety vs low cost</td><td>Unavailable roads are a hard filter applied before sorting.</td><td>Cheapest road overall (R21 Korangi–Landhi, cost 2) is unavailable and never selected.</td></tr><tr><td>Capacity vs demand</td><td>Hard capacity constraints; maximise total benefit; every unserved request gets a reason. Fairness is not guaranteed.</td><td>12 of 24 served; 9 lost to capacity competition.</td></tr><tr><td>Benefit vs fairness / urgency</td><td>Objective is the sum of declared benefits; ties prefer serving more requests. Urgency would enter only through a stated benefit formula.</td><td>Greedy benefit-per-unit baseline reaches 781 vs DP 815.</td></tr><tr><td>Time-decay vs computation</td><td>Decay is off; if enabled, b_i(t) = b_i·e^(−λt) would be fixed per run so the DP stays exact.</td><td>All runs use constant benefits.</td></tr><tr><td>Exactness vs scalability</td><td>Exact dense DP limited to k = 3 stations (stress k = 4); network stage scales separately.</td><td>States per layer grow from 1,040 to 403,617 when capacities are multiplied by 8 (E5).</td></tr></tbody></table>
-<h1 id="s9">4. System Architecture</h1>
+<h1 id="s9"><span class="num">04</span>System Architecture</h1>
 <p>The implementation is a modular Python pipeline (Figure 1). Each module has one job and is unit-tested on its own; <code>run_all.py</code> runs the whole pipeline for every experiment, validates every result and writes all tables, figures and <code>results.json</code>, which both this report and the dashboard read.</p>
 <figure><img src="figures/fig_architecture.png" style="width:160mm" alt=""><figcaption>Figure 1. Block diagram of the system: data flow from the CSV inputs through both algorithmic stages to the validated outputs.</figcaption></figure>
 <p class="cap">Table 3. Source modules.</p><table><thead><tr><th>Module</th><th>Responsibility</th></tr></thead><tbody><tr><td><code>io_validate.py</code></td><td>Load CSVs into typed records; reject duplicate IDs, negative values, invalid endpoints, self-loops and unit-rounding errors.</td></tr><tr><td><code>graph.py</code></td><td>Active graph (drop unavailable roads and removed sites); the single edge order <code>edge_key</code>; BFS.</td></tr><tr><td><code>dsu.py</code></td><td>Union-Find with union by rank and path compression.</td></tr><tr><td><code>kruskal.py</code></td><td>Kruskal MSF with full trace; components with site names; hub and isolated flags.</td></tr><tr><td><code>repair.py</code></td><td>Incremental repair of the forest after road failures.</td></tr><tr><td><code>eligibility.py</code></td><td>Same-component eligibility and pre-DP unserved labels.</td></tr><tr><td><code>dp.py</code></td><td>Exact 0/1 multiple-knapsack DP on a dense NumPy table with backtracking.</td></tr><tr><td><code>brute.py</code>, <code>heuristic.py</code></td><td>Brute-force checker (q ≤ 10); greedy benefit-per-unit baseline.</td></tr><tr><td><code>validate.py</code>, <code>pipeline.py</code></td><td>Independent result validators; glue code and experiment edits.</td></tr><tr><td><code>run_all.py</code></td><td>Experiments E1–E5, verification, edge-case log, figures, <code>results.json</code>.</td></tr></tbody></table>
-<h1 id="s10">5. Methodology and Pseudocode</h1>
+<h1 id="s10"><span class="num">05</span>Methodology and Pseudocode</h1>
 <h2 id="s11">5.1 Part A: Union-Find (A1)</h2>
 <pre>MAKE-SET(x):   parent[x] &lt;- x;  rank[x] &lt;- 0
 FIND(x):
@@ -146,7 +165,7 @@ UNION(a, b):
 GREEDY-BASELINE(items, C):                           // bonus; no approximation ratio claimed
     sort items by b_i / w_i descending (exact fractions)
     for each item: give it to the eligible station with the most remaining space that fits</pre>
-<h1 id="s17">6. Correctness</h1>
+<h1 id="s17"><span class="num">06</span>Correctness</h1>
 <h2 id="s18">6.1 Kruskal: greedy-choice property</h2>
 <p>Suppose Kruskal accepts e = (u, v). Then u and v are in different DSU sets; let C be u&#x27;s set. Every road ranked before e that crosses the cut (C, V∖C) was already scanned and would have joined two different sets, so it would have been accepted and C would not separate u from v. Hence e is the lowest-ranked road crossing the cut. <b>Exchange argument:</b> let T<i> be an optimal spanning forest that does not contain e. Adding e to T</i> creates a cycle that crosses the cut at another road f with w(f) ≥ w(e). T<i> − f + e is a spanning forest with cost no greater than T</i>, so it is also optimal and contains e. Therefore every accepted road is safe.</p>
 <h2 id="s19">6.2 Kruskal: optimal substructure and the disconnected case</h2>
@@ -159,13 +178,13 @@ GREEDY-BASELINE(items, C):                           // bonus; no approximation 
 <p>Consider an optimal solution for the subproblem (i, c). Request i is either skipped or placed in exactly one eligible station j with c_j ≥ w_i. Removing it leaves a feasible solution of subproblem (i−1, c) or (i−1, c − w_i·e_j) respectively, and that remainder must be optimal for its subproblem; otherwise replacing it with a better one would improve (i, c). The recurrence takes the maximum over exactly these cases, so by induction on i every DP[i][c] is optimal and DP[q][C] is the optimum. Because each request is decided in one layer as either SKIP or a single station, <b>no request can be assigned twice</b>, which is why the design does not run k independent knapsacks. Backtracking follows the stored choices from (q, C) and reproduces a solution of exactly value DP[q][C]; the validator re-adds the benefits to confirm this.</p>
 <h2 id="s23">6.6 Tie rule and verification</h2>
 <p>Ties are broken by more requests served (encoded in the pair), then by checking SKIP first and stations in ascending ID with a strict comparison, so results are deterministic. Brute force evaluates the same objective over all (k+1)^q assignments; it agreed with the DP on (benefit, served) for 200 of 200 random instances, including zero-capacity stations and too-heavy items.</p>
-<h1 id="s24">7. Complexity Analysis</h1>
+<h1 id="s24"><span class="num">07</span>Complexity Analysis</h1>
 <p><b>Kruskal.</b> Filtering is O(m); sorting is O(m log m); n MAKE-SET operations are O(n); at most m UNION/FIND pairs cost O(m α(n)) amortised. Hence T(n, m) = O(n + m log m + m α(n)) = <b>O(m log m)</b> for a non-trivial graph, and since m ≤ n², log m = O(log n). Space is O(n) for the DSU plus O(m) for the sorted edges: <b>O(n + m)</b>.</p>
 <p><b>Repair.</b> Each failed forest road needs two BFS traversals of the forest (O(n)) and one scan of the surviving roads (O(m)), so r failures cost <b>O(r(n + m))</b>; with r = 3 this is O(n + m). It is a simple repair, not a dynamic-MST structure, so it is not guaranteed to be faster than re-sorting; E5 measures both.</p>
 <p><b>Eligibility.</b> O(q k). <b>DP.</b> With S = Π_j (C_j + 1) states per layer, each of q requests tries SKIP plus at most k stations per state: <b>time O(q k S)</b>. Keeping all q + 1 layers for backtracking needs <b>space O(q S)</b>. The bound is pseudo-polynomial (it depends on capacity values) and exponential in k. For the baseline, S = 1,040 (= 13 × 10 × 8), with 21 requests entering the DP, giving 22,880 states and a 205.9 KB table; the k = 4 stress run has S = 6,240.</p>
 <p><b>Brute force.</b> (k+1)^q assignments, each checked in O(q + k): O((k+1)^q (q + k)). For q = 24 and k = 3 this is 4^24 ≈ 2.8 × 10^14 assignments, which is infeasible; for q = 10 it is 4^10 = 1,048,576, which is why brute force is restricted to q ≤ 10. <b>Greedy baseline.</b> O(q log q + q k).</p>
 <p class="cap">Table 4. Complexity summary.</p><table><thead><tr><th>Algorithm</th><th>Time</th><th>Space</th></tr></thead><tbody><tr><td>Union-Find (m operations)</td><td>O(m α(n)) amortised</td><td>O(n)</td></tr><tr><td>Kruskal MSF</td><td>O(m log m)</td><td>O(n + m)</td></tr><tr><td>Incremental repair (r failures)</td><td>O(r (n + m))</td><td>O(n + m)</td></tr><tr><td>Eligibility</td><td>O(q k)</td><td>O(q k)</td></tr><tr><td>Multi-knapsack DP</td><td>O(q k S), S = Π(C_j + 1)</td><td>O(q S)</td></tr><tr><td>Brute force</td><td>O((k+1)^q (q + k))</td><td>O(q + k)</td></tr><tr><td>Greedy baseline</td><td>O(q log q + q k)</td><td>O(q + k)</td></tr></tbody></table>
-<h1 id="s25">8. Implementation and Dataset</h1>
+<h1 id="s25"><span class="num">08</span>Implementation and Dataset</h1>
 <p>The system is written in Python (tested with Python 3.14.7); all algorithms are hand-written, with NumPy used only for the DP table. networkx appears only in the tests, as an independent cross-check of Kruskal&#x27;s cost. pytest runs the test suite, matplotlib draws the figures, and the dashboard is a Next.js web application that reads the same <code>results.json</code>.</p>
 <h2 id="s26">8.1 The Karachi-EV-12 dataset (synthetic)</h2>
 <p>Site names are real Karachi areas, but every cost, severity, capacity, demand and benefit is synthetic. A seeded generator (<code>scripts/gen_dataset.py</code>, seed 363) writes the CSV files deterministically, and a test asserts every design property: 4 unavailable roads that are exactly the links between the main and the cut-off components, a cheap triangle, several equal-cost groups, an unavailable road cheaper than selected roads, real over-demand in each component and two too-heavy requests.</p>
@@ -180,7 +199,7 @@ python run_all.py
 python scripts/build_report_assets.py
 python scripts/build_report.py</pre>
 <p>Timings use <code>time.perf_counter</code> and report the median of 20 runs in one Python process on Windows-11-10.0.26300-SP0, Intel64 Family 6 Model 154 Stepping 3, GenuineIntel, Python 3.14.7, NumPy 2.4.6. They vary between machines and runs; all counts, costs and benefits are deterministic.</p>
-<h1 id="s29">9. Results</h1>
+<h1 id="s29"><span class="num">09</span>Results</h1>
 <p>Every number and figure in this section is generated by <code>run_all.py</code> from the submitted code.</p>
 <h2 id="s30">9.1 E1 Baseline: network</h2>
 <p>4 unavailable roads (R21 Korangi–Landhi, R22 Korangi–Malir, R23 Gulshan-e-Iqbal–Airport, R24 Gulistan-e-Johar–Malir) are removed before sorting, leaving 20 roads. Table 6 is the Kruskal trace in sorted order.</p>
@@ -220,7 +239,7 @@ python scripts/build_report.py</pre>
 <h2 id="s37">9.8 Mandatory edge cases</h2>
 <p>The three CEP-mandatory cases run in the submitted code; the full output is <code>output/edge_cases.log</code> (Appendix A).</p>
 <ul><li><b>Disconnected graph:</b> the forest has 9 roads over 3 components, listed by name ({Saddar, Clifton, DHA, PECHS, Gulshan-e-Iqbal, Gulistan-e-Johar, North Nazimabad, Korangi}; {Malir, Airport, Landhi}; {Surjani Town}); none of the filtered roads is selected, so no connection is invented.</li><li><b>Over-demand:</b> component Saddar: feasible demand 37 units vs capacity 21 units; component Malir: feasible demand 15 units vs capacity 7 units. All loads stay within capacity; unserved (capacity competition): EV01, EV02, EV03, EV05, EV06, EV14, EV17, EV21, EV22.</li><li><b>Too-heavy request:</b> EV08 at PECHS needs 14 units but its eligible stations hold ST1=12, ST2=9; EV20 at Airport needs 9 units but its eligible stations hold ST3=7; these are labelled too_large_for_any_eligible_station and never assigned.</li></ul>
-<h1 id="s38">10. Conclusion and Limitations</h1>
+<h1 id="s38"><span class="num">10</span>Conclusion and Limitations</h1>
 <p>The project combines a greedy minimum spanning forest with exact multi-knapsack dynamic programming and links them through component-based eligibility. Kruskal with Union-Find filtered unavailable roads, broke ties deterministically and named every component; the incremental repair matched full recomputation in cost in every experiment. The DP respected every capacity, never assigned a request twice, reported a reason for every unserved request and agreed with brute force on every small instance. Removing the two highest-severity sites showed how losing a central site can split the network and remove a station, reducing benefit from 815 to 540 in the model.</p>
 <h2 id="s39">10.1 Limitations</h2>
 <ul><li>The data are synthetic; they cannot establish real construction costs, demand or traffic.</li><li>The MST minimises connection cost only, not travel time, coverage, resilience or safety.</li><li>Benefit scores encode the designers&#x27; priorities; maximising their sum does not guarantee fairness.</li><li>Rounding to 10 kWh units can change feasibility; requests are indivisible.</li><li>The exact DP grows as Π(C_j + 1), so it is limited to k = 3 (stress k = 4) stations.</li><li>Queues, charger power, charging duration, prices and grid limits are not modelled.</li><li>The repair algorithm is simple, not a dynamic-MST data structure; its speed is measured, not guaranteed.</li></ul>

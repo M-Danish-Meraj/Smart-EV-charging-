@@ -279,33 +279,86 @@ def render_docx(rep, path, figdir):
 
 # ----------------------------- HTML ---------------------------------
 
-CSS = """
-@page { size: A4; margin: 20mm 20mm 20mm 20mm;
-  @bottom-center { content: counter(page); font: 9pt Calibri, Carlito, Arial, sans-serif; color: #555; } }
-body { font: 10.5pt/1.45 Calibri, Carlito, "Segoe UI", Arial, sans-serif; color: #1a1a1a; max-width: 170mm; margin: 0 auto; }
-h1 { font-size: 16pt; color: #1f3a5f; margin: 18pt 0 6pt; page-break-after: avoid; }
-h2 { font-size: 13pt; color: #1f3a5f; margin: 14pt 0 4pt; page-break-after: avoid; }
-h3 { font-size: 11.5pt; color: #1f3a5f; margin: 10pt 0 3pt; page-break-after: avoid; }
-p { margin: 0 0 6pt; text-align: justify; }
-ul, ol { margin: 0 0 6pt; padding-left: 18pt; } li { margin-bottom: 2pt; }
-code { font: 8.8pt Consolas, "Courier New", monospace; }
-pre { font: 8.3pt/1.3 Consolas, "Courier New", monospace; background: #f2f4f7; padding: 6pt 8pt; border-left: 3px solid #9fb3cc; white-space: pre-wrap; page-break-inside: avoid; }
-table { border-collapse: collapse; width: 100%; font-size: 8.8pt; margin: 2pt 0 10pt; page-break-inside: auto; }
-tr { page-break-inside: avoid; }
-th, td { border: 0.6pt solid #9aa5b1; padding: 2.5pt 4pt; vertical-align: top; text-align: left; }
-th { background: #d9e2f3; }
-.cap { font-weight: bold; font-size: 9.2pt; margin: 8pt 0 2pt; page-break-after: avoid; }
-figure { margin: 8pt 0 10pt; text-align: center; page-break-inside: avoid; }
-figure img { max-width: 100%; }
-figcaption { font-style: italic; font-size: 9.2pt; }
-.title { text-align: center; padding-top: 10mm; }
-.title p { text-align: center; }
-.title table { width: 60%; margin: 6pt auto; font-size: 10.5pt; }
-.pb { page-break-after: always; }
-.toc { font-size: 10pt; line-height: 1.3; }
-.toc ol { list-style: none; padding-left: 0; margin: 0; } .toc li { margin: 0; } .toc li li { padding-left: 14pt; }
-.toc > ol > li { margin-top: 3pt; }
+# PDF styling follows the team's proposal: navy cover with a green accent, numbered
+# section headings with a green rule, navy table headers, running header and footer.
+NAVY, NAVY2, GREEN = "#0c1e38", "#15294a", "#14a37a"
+CSS = f"""
+@page {{ size: A4; margin: 22mm 18mm 20mm 18mm;
+  @top-left {{ content: "SMART EV CHARGING OPTIMIZER"; font: bold 7.5pt Arial, sans-serif; letter-spacing: 1.2pt; color: #1b2433; vertical-align: bottom; padding-bottom: 3mm; border-bottom: 1.4pt solid {GREEN}; }}
+  @top-right {{ content: "CEP Report \\00B7 CT-363"; font: 7.5pt Arial, sans-serif; color: #6b7280; vertical-align: bottom; padding-bottom: 3mm; border-bottom: 1.4pt solid {GREEN}; }}
+  @bottom-left {{ content: "{UNIVERSITY} \\00B7 {DEPARTMENT}"; font: 7.5pt Arial, sans-serif; color: #6b7280; vertical-align: top; padding-top: 3mm; border-top: 0.6pt solid #d1d5db; }}
+  @bottom-right {{ content: counter(page); font: bold 8pt Arial, sans-serif; color: #1b2433; vertical-align: top; padding-top: 3mm; border-top: 0.6pt solid #d1d5db; }} }}
+@page :first {{ margin: 0; @top-left {{ content: none; border: 0 }} @top-right {{ content: none; border: 0 }}
+  @bottom-left {{ content: none; border: 0 }} @bottom-right {{ content: none; border: 0 }} }}
+* {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
+body {{ font: 9.6pt/1.5 Arial, "Liberation Sans", Helvetica, sans-serif; color: #1f2937; margin: 0; }}
+h1 {{ font: bold 15pt Arial, sans-serif; color: #111827; margin: 16pt 0 8pt; padding-bottom: 4pt; border-bottom: 1.4pt solid {GREEN}; page-break-after: avoid; }}
+h1 .num {{ color: {GREEN}; margin-right: 8pt; }}
+h2 {{ font: bold 11pt Arial, sans-serif; color: {GREEN}; margin: 12pt 0 4pt; page-break-after: avoid; }}
+h3 {{ font: bold 10pt Arial, sans-serif; color: #111827; margin: 9pt 0 3pt; page-break-after: avoid; }}
+p {{ margin: 0 0 6pt; text-align: justify; }}
+b {{ color: #111827; }}
+ul, ol {{ margin: 0 0 6pt; padding-left: 16pt; }} li {{ margin-bottom: 2pt; }}
+code {{ font: 8.4pt Consolas, "DejaVu Sans Mono", monospace; color: #0f5132; }}
+pre {{ font: 8pt/1.35 Consolas, "DejaVu Sans Mono", monospace; background: {NAVY}; color: #e5ecf5; padding: 7pt 9pt; border-left: 4pt solid {GREEN}; white-space: pre-wrap; page-break-inside: avoid; margin: 4pt 0 8pt; }}
+table {{ border-collapse: collapse; width: 100%; font-size: 8.4pt; margin: 2pt 0 10pt; }}
+tr {{ page-break-inside: avoid; }}
+th, td {{ padding: 3pt 5pt; vertical-align: top; text-align: left; border-bottom: 0.5pt solid #e5e7eb; }}
+th {{ background: {NAVY}; color: #fff; font-weight: bold; border-bottom: 1.4pt solid {GREEN}; }}
+tbody tr:nth-child(even) td {{ background: #f3f6f9; }}
+td:first-child {{ font-weight: bold; color: #111827; }}
+.cap {{ font: bold 8.6pt Arial, sans-serif; color: #374151; margin: 8pt 0 3pt; page-break-after: avoid; }}
+figure {{ margin: 8pt 0 10pt; text-align: center; page-break-inside: avoid; }}
+figure img {{ max-width: 100%; }}
+figcaption {{ font-size: 8.6pt; color: #4b5563; font-style: italic; }}
+.pb {{ page-break-after: always; }}
+.toc {{ font-size: 9.6pt; line-height: 1.35; }}
+.toc a {{ color: #1f2937; text-decoration: none; }}
+.toc ol {{ list-style: none; padding-left: 0; margin: 0; }} .toc li {{ margin: 0; }} .toc li li {{ padding-left: 16pt; color: #4b5563; }}
+.toc > ol > li {{ margin-top: 4pt; font-weight: bold; }} .toc li li a {{ font-weight: normal; color: #4b5563; }}
+
+/* cover, modelled on the proposal */
+.cover {{ width: 210mm; height: 296mm; overflow: hidden; background: {NAVY}; color: #fff; position: relative;
+  box-sizing: border-box; padding: 0 16mm 0 20mm; border-left: 3mm solid {GREEN}; }}
+.cover .top {{ display: flex; align-items: center; justify-content: space-between; padding: 12mm 0 6mm;
+  border-bottom: 0.8pt solid {GREEN}; }}
+.cover .top img {{ width: 22mm; height: 22mm; }}
+.cover .uni {{ text-align: center; }}
+.cover .uni .n {{ font: bold 13pt Georgia, "DejaVu Serif", serif; }}
+.cover .uni .d {{ font: 8.5pt Arial, sans-serif; color: #c7d2e0; margin-top: 2pt; }}
+.cover .eyebrow {{ font: bold 8.5pt Arial, sans-serif; letter-spacing: 3pt; color: {GREEN}; margin: 16mm 0 4mm; }}
+.cover h1.t {{ font: bold 30pt/1.22 Georgia, "DejaVu Serif", serif; color: #fff; border: 0; margin: 0; padding: 0; }}
+.cover .sub {{ font: bold 15pt Georgia, "DejaVu Serif", serif; color: {GREEN}; margin: 5mm 0 8mm; }}
+.cover .net {{ display: block; width: 125mm; margin: 0 auto 8mm; }}
+.cover .rule {{ border-top: 0.6pt solid #2a3d5c; margin: 0 0 6mm; }}
+.cover .meta {{ display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-bottom: 7mm; }}
+.cover .lbl {{ font: bold 7.5pt Arial, sans-serif; letter-spacing: 2.5pt; color: {GREEN}; margin-bottom: 2mm; }}
+.cover .val {{ font: bold 10.5pt Arial, sans-serif; color: #fff; }}
+.cover .members {{ display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm 5mm; }}
+.cover .card {{ background: {NAVY2}; border-left: 1.2mm solid {GREEN}; padding: 3mm 4mm; }}
+.cover .card .nm {{ font: bold 10.5pt Arial, sans-serif; }}
+.cover .card .rl {{ font: 8.5pt Arial, sans-serif; color: #aab6c8; margin-top: 1mm; }}
+.cover .sig {{ position: absolute; left: 20mm; right: 16mm; bottom: 12mm; display: flex; justify-content: space-between;
+  font: 8.5pt Arial, sans-serif; color: #aab6c8; }}
 """
+
+
+def cover_html(fig_rel):
+    members = "".join(f'<div class="card"><div class="nm">{html.escape(n)}</div><div class="rl">Roll No. {r}</div></div>'
+                      for n, r in TEAM)
+    return (f'<div class="cover"><div class="top"><img src="{fig_rel}/logo_left.png" alt="">'
+            f'<div class="uni"><div class="n">{html.escape(UNIVERSITY)}</div><div class="d">{html.escape(DEPARTMENT)}</div></div>'
+            f'<img src="{fig_rel}/logo_right.png" alt=""></div>'
+            f'<div class="eyebrow">COMPLEX ENGINEERING PROBLEM · FINAL REPORT</div>'
+            f'<h1 class="t">Smart EV Charging Station Planning and Energy Allocation System</h1>'
+            f'<div class="sub">for Urban Pakistan</div>'
+            f'<img class="net" src="{fig_rel}/cover_network.png" alt="">'
+            f'<div class="rule"></div>'
+            f'<div class="meta"><div><div class="lbl">COURSE</div><div class="val">Design and Analysis of Algorithms · CT-363</div></div>'
+            f'<div><div class="lbl">COURSE INSTRUCTOR</div><div class="val">{html.escape(INSTRUCTOR)}</div></div></div>'
+            f'<div class="lbl">GROUP MEMBERS</div><div class="members">{members}</div>'
+            f'<div class="sig"><span>Date: {date.today().strftime("%d %B %Y")}</span>'
+            f'<span>Faculty signature: ______________________</span></div></div>')
 
 
 def render_html(rep, path, fig_rel):
@@ -321,28 +374,22 @@ def render_html(rep, path, fig_rel):
     in_title = False
     for blk in rep.blocks:
         kind = blk[0]
-        if kind == "title_page":
+        if kind == "title_page":                 # the HTML/PDF uses the proposal-style cover
             if not in_title:
-                body.append('<div class="title">')
+                body.append(cover_html(fig_rel))
                 in_title = True
-            for text, size, bold, space in blk[1]:
-                w = "bold" if bold else "normal"
-                body.append(f'<p style="font-size:{size}pt;font-weight:{w};margin-bottom:{space}pt">{html.escape(text)}</p>')
             continue
-        if kind == "team_table":
-            rows = "".join(f"<tr><td>{html.escape(n)}</td><td>{r}</td></tr>" for n, r in blk[1])
-            body.append(f"<table><tr><th>Student name</th><th>Roll number</th></tr>{rows}</table>")
-            continue
-        if kind == "end_title":
-            body.append("</div>")
-            in_title = False
+        if kind in ("team_table", "end_title"):
             continue
         if kind == "toc":
             body.append("<!--TOC-->")
             continue
         if kind in ("h1", "h2", "h3"):
             hid += 1
-            body.append(f'<{kind} id="s{hid}">{html.escape(blk[1])}</{kind}>')
+            m = re.match(r"(\d+)\.\s+(.*)", blk[1]) if kind == "h1" else None
+            label = (f'<span class="num">{int(m.group(1)):02d}</span>{html.escape(m.group(2))}' if m
+                     else html.escape(blk[1]))
+            body.append(f'<{kind} id="s{hid}">{label}</{kind}>')
             if kind in ("h1", "h2"):
                 toc.append((kind, hid, blk[1]))
         elif kind == "p":
