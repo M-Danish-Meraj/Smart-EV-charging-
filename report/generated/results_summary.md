@@ -111,8 +111,8 @@ Key: cost asc, s(u)+s(v) desc, min(u,v) asc, max(u,v) asc.
 | DP states per layer S | 1040 |
 | DP total states (q_dp+1) S | 22880 |
 | DP table memory | 205,920 bytes |
-| Kruskal runtime (median of 20) | 0.022 ms |
-| allocation runtime: eligibility + DP (median of 20) | 0.377 ms |
+| Kruskal runtime (median of 20) | 0.018 ms |
+| allocation runtime: eligibility + DP (median of 20) | 0.299 ms |
 
 ## Stress run: k = 4 (ST4 Korangi activated)
 
@@ -123,7 +123,7 @@ Key: cost asc, s(u)+s(v) desc, min(u,v) asc, max(u,v) asc.
 | table memory (bytes) | 205,920 | 1,235,520 |
 | requests served | 12 | 14 |
 | total benefit | 815 | 863 |
-| allocation runtime ms (median of 20) | 0.377 | 1.486 |
+| allocation runtime ms (median of 20) | 0.299 | 1.514 |
 
 # E2 Three-road failure: incremental repair vs full Kruskal
 
@@ -142,7 +142,7 @@ Failure roads were chosen before the experiment (data/e2_failures.csv).
 | valid forest (validator) | yes | yes |
 | total cost | 33 | 33 |
 | roads in forest | 8 | 8 |
-| runtime ms (median of 20) | 0.013 | 0.018 |
+| runtime ms (median of 20) | 0.027 | 0.037 |
 
 Cost before failures: 36. Costs equal: yes.
 Edge-set difference (repair vs full): only in repair none, only in full none.
@@ -260,41 +260,41 @@ Timings: time.perf_counter, median of 20 runs (DP: median of 5), same machine an
 
 | n sites | m active roads | components | Kruskal ms | repair ms | full Kruskal after failures ms | repair/full | costs equal |
 |---|---|---|---|---|---|---|---|
-| 20 | 57 | 1 | 0.043 | 0.029 | 0.042 | 0.71x | yes |
-| 50 | 141 | 1 | 0.117 | 0.102 | 0.169 | 0.60x | yes |
-| 100 | 277 | 1 | 0.324 | 0.147 | 0.408 | 0.36x | yes |
-| 200 | 560 | 1 | 0.902 | 0.329 | 1.027 | 0.32x | yes |
+| 20 | 57 | 1 | 0.098 | 0.067 | 0.093 | 0.71x | yes |
+| 50 | 141 | 1 | 0.231 | 0.106 | 0.233 | 0.46x | yes |
+| 100 | 277 | 1 | 0.293 | 0.127 | 0.207 | 0.61x | yes |
+| 200 | 560 | 1 | 0.447 | 0.234 | 0.473 | 0.50x | yes |
 
 ## DP: q = n/2 requests, k = 3 and 4 stations (capacities 12, 9, 7 [, 5])
 
 | n | q | k | S per layer | total states | DP ms | table bytes |
 |---|---|---|---|---|---|---|
-| 20 | 10 | 3 | 1040 | 11440 | 0.288 | 102,960 |
-| 20 | 10 | 4 | 6240 | 68640 | 0.732 | 617,760 |
-| 50 | 25 | 3 | 1040 | 27040 | 0.537 | 243,360 |
-| 50 | 25 | 4 | 6240 | 162240 | 1.839 | 1,460,160 |
-| 100 | 50 | 3 | 1040 | 53040 | 1.035 | 477,360 |
-| 100 | 50 | 4 | 6240 | 318240 | 4.067 | 2,864,160 |
-| 200 | 100 | 3 | 1040 | 105040 | 1.935 | 945,360 |
-| 200 | 100 | 4 | 6240 | 630240 | 5.868 | 5,672,160 |
+| 20 | 10 | 3 | 1040 | 11440 | 0.176 | 102,960 |
+| 20 | 10 | 4 | 6240 | 68640 | 0.367 | 617,760 |
+| 50 | 25 | 3 | 1040 | 27040 | 0.420 | 243,360 |
+| 50 | 25 | 4 | 6240 | 162240 | 2.333 | 1,460,160 |
+| 100 | 50 | 3 | 1040 | 53040 | 0.901 | 477,360 |
+| 100 | 50 | 4 | 6240 | 318240 | 3.291 | 2,864,160 |
+| 200 | 100 | 3 | 1040 | 105040 | 1.479 | 945,360 |
+| 200 | 100 | 4 | 6240 | 630240 | 5.564 | 5,672,160 |
 
 ## DP: pseudo-polynomial growth with capacity (q = 24, k = 3)
 
 | capacity factor | capacities | S per layer | DP ms | table bytes |
 |---|---|---|---|---|
-| 1 | [12, 9, 7] | 1040 | 0.582 | 234,000 |
-| 2 | [24, 18, 14] | 7125 | 1.952 | 1,603,125 |
-| 4 | [48, 36, 28] | 52577 | 13.094 | 11,829,825 |
-| 8 | [96, 72, 56] | 403617 | 162.119 | 90,813,825 |
+| 1 | [12, 9, 7] | 1040 | 0.541 | 234,000 |
+| 2 | [24, 18, 14] | 7125 | 2.102 | 1,603,125 |
+| 4 | [48, 36, 28] | 52577 | 14.678 | 11,829,825 |
+| 8 | [96, 72, 56] | 403617 | 185.769 | 90,813,825 |
 
 ## Brute force vs DP (k = 3)
 
 | q | assignments checked | brute force ms | DP ms | same optimum |
 |---|---|---|---|---|
-| 4 | 256 | 0.323 | 0.081 | yes |
-| 6 | 4,096 | 3.690 | 0.100 | yes |
-| 8 | 65,536 | 82.484 | 0.297 | yes |
-| 10 | 1,048,576 | 1603.907 | 0.242 | yes |
+| 4 | 256 | 0.309 | 0.082 | yes |
+| 6 | 4,096 | 4.258 | 0.116 | yes |
+| 8 | 65,536 | 73.195 | 0.152 | yes |
+| 10 | 1,048,576 | 1885.467 | 1.006 | yes |
 
 # Verification
 

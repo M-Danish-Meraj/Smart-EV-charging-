@@ -16,12 +16,14 @@ Every number in the report must come from these files.
 import argparse
 import csv
 import json
+import platform
 import random
 import statistics
 import time
 from pathlib import Path
 
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -712,7 +714,10 @@ def main(out_dir="output", quick=False):
 
     results = {
         "meta": {"dataset": "Karachi-EV-12", "synthetic": True, "timing_runs": runs, "quick": quick,
-                 "kwh_per_unit": KWH_PER_UNIT},
+                 "kwh_per_unit": KWH_PER_UNIT,
+                 "machine": {"python": platform.python_version(), "os": platform.platform(),
+                             "cpu": platform.processor() or platform.machine(),
+                             "numpy": np.__version__}},
         "sites": [{"id": l.location_id, "name": l.name, "lat": l.latitude, "lon": l.longitude,
                    "severity": l.severity, "is_hub": l.is_hub} for l in ds.locations],
         "roads": [{"id": r.edge_id, "u": r.u, "v": r.v, "cost": r.cost, "available": r.available}

@@ -4,7 +4,13 @@
   "synthetic": true,
   "timing_runs": 20,
   "quick": false,
-  "kwh_per_unit": 10
+  "kwh_per_unit": 10,
+  "machine": {
+   "python": "3.14.7",
+   "os": "Windows-11-10.0.26300-SP0",
+   "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+   "numpy": "2.4.6"
+  }
  },
  "sites": [
   {
@@ -789,8 +795,8 @@
    ]
   },
   "runtime_ms": {
-   "kruskal": 0.022,
-   "allocation": 0.3772
+   "kruskal": 0.0183,
+   "allocation": 0.2994
   },
   "stress": {
    "station": "ST4",
@@ -1150,7 +1156,7 @@
      }
     ]
    },
-   "runtime_ms": 1.4861
+   "runtime_ms": 1.5143
   }
  },
  "e2": {
@@ -1240,8 +1246,8 @@
    }
   ],
   "runtime_ms": {
-   "repair": 0.0135,
-   "full": 0.0183
+   "repair": 0.0274,
+   "full": 0.0366
   },
   "allocation": {
    "served": 12,
@@ -2125,36 +2131,36 @@
     "n": 20,
     "m": 57,
     "components": 1,
-    "kruskal_ms": 0.0432,
-    "repair_ms": 0.0294,
-    "full_ms": 0.0416,
+    "kruskal_ms": 0.0982,
+    "repair_ms": 0.0666,
+    "full_ms": 0.0932,
     "costs_equal": true
    },
    {
     "n": 50,
     "m": 141,
     "components": 1,
-    "kruskal_ms": 0.1175,
-    "repair_ms": 0.1017,
-    "full_ms": 0.1687,
+    "kruskal_ms": 0.2307,
+    "repair_ms": 0.1061,
+    "full_ms": 0.233,
     "costs_equal": true
    },
    {
     "n": 100,
     "m": 277,
     "components": 1,
-    "kruskal_ms": 0.324,
-    "repair_ms": 0.1469,
-    "full_ms": 0.4081,
+    "kruskal_ms": 0.2925,
+    "repair_ms": 0.1273,
+    "full_ms": 0.2073,
     "costs_equal": true
    },
    {
     "n": 200,
     "m": 560,
     "components": 1,
-    "kruskal_ms": 0.9017,
-    "repair_ms": 0.3287,
-    "full_ms": 1.027,
+    "kruskal_ms": 0.4468,
+    "repair_ms": 0.2342,
+    "full_ms": 0.473,
     "costs_equal": true
    }
   ],
@@ -2165,7 +2171,7 @@
     "k": 3,
     "states_per_layer": 1040,
     "total_states": 11440,
-    "dp_ms": 0.2875,
+    "dp_ms": 0.176,
     "table_bytes": 102960
    },
    {
@@ -2174,7 +2180,7 @@
     "k": 4,
     "states_per_layer": 6240,
     "total_states": 68640,
-    "dp_ms": 0.7323,
+    "dp_ms": 0.3674,
     "table_bytes": 617760
    },
    {
@@ -2183,7 +2189,7 @@
     "k": 3,
     "states_per_layer": 1040,
     "total_states": 27040,
-    "dp_ms": 0.5372,
+    "dp_ms": 0.4196,
     "table_bytes": 243360
    },
    {
@@ -2192,7 +2198,7 @@
     "k": 4,
     "states_per_layer": 6240,
     "total_states": 162240,
-    "dp_ms": 1.8388,
+    "dp_ms": 2.3329,
     "table_bytes": 1460160
    },
    {
@@ -2201,7 +2207,7 @@
     "k": 3,
     "states_per_layer": 1040,
     "total_states": 53040,
-    "dp_ms": 1.0348,
+    "dp_ms": 0.9006,
     "table_bytes": 477360
    },
    {
@@ -2210,7 +2216,7 @@
     "k": 4,
     "states_per_layer": 6240,
     "total_states": 318240,
-    "dp_ms": 4.0665,
+    "dp_ms": 3.2905,
     "table_bytes": 2864160
    },
    {
@@ -2219,7 +2225,7 @@
     "k": 3,
     "states_per_layer": 1040,
     "total_states": 105040,
-    "dp_ms": 1.9354,
+    "dp_ms": 1.479,
     "table_bytes": 945360
    },
    {
@@ -2228,7 +2234,7 @@
     "k": 4,
     "states_per_layer": 6240,
     "total_states": 630240,
-    "dp_ms": 5.868,
+    "dp_ms": 5.5636,
     "table_bytes": 5672160
    }
   ],
@@ -2241,7 +2247,7 @@
      7
     ],
     "states_per_layer": 1040,
-    "dp_ms": 0.5823,
+    "dp_ms": 0.5411,
     "table_bytes": 234000
    },
    {
@@ -2252,7 +2258,7 @@
      14
     ],
     "states_per_layer": 7125,
-    "dp_ms": 1.9516,
+    "dp_ms": 2.1019,
     "table_bytes": 1603125
    },
    {
@@ -2263,7 +2269,7 @@
      28
     ],
     "states_per_layer": 52577,
-    "dp_ms": 13.0942,
+    "dp_ms": 14.6777,
     "table_bytes": 11829825
    },
    {
@@ -2274,7 +2280,7 @@
      56
     ],
     "states_per_layer": 403617,
-    "dp_ms": 162.1193,
+    "dp_ms": 185.7691,
     "table_bytes": 90813825
    }
   ],
@@ -2282,29 +2288,29 @@
    {
     "q": 4,
     "checked": 256,
-    "brute_ms": 0.3233,
-    "dp_ms": 0.0809,
+    "brute_ms": 0.3091,
+    "dp_ms": 0.0818,
     "same": true
    },
    {
     "q": 6,
     "checked": 4096,
-    "brute_ms": 3.6896,
-    "dp_ms": 0.1003,
+    "brute_ms": 4.2575,
+    "dp_ms": 0.1165,
     "same": true
    },
    {
     "q": 8,
     "checked": 65536,
-    "brute_ms": 82.4838,
-    "dp_ms": 0.2971,
+    "brute_ms": 73.1952,
+    "dp_ms": 0.152,
     "same": true
    },
    {
     "q": 10,
     "checked": 1048576,
-    "brute_ms": 1603.907,
-    "dp_ms": 0.242,
+    "brute_ms": 1885.4673,
+    "dp_ms": 1.0058,
     "same": true
    }
   ]

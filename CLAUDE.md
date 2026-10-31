@@ -26,6 +26,7 @@ The two sections below are copied from the brief.
 - Dense DP uses k = 3 stations (stress run k = 4). Report actual state counts.
 - Bonus (optional): a greedy benefit-per-unit heuristic as a baseline, reporting the observed gap to DP. Claim no approximation ratio.
 - Frontend (later, optional): React + Vite. Backend: FastAPI over the same `src/` package. CORS must be enabled (5173 to 8000).
+  - Superseded by the user (2026-10-31): the dashboard is Next.js in `dashboard/`, reading `results.json`; no API server.
 
 ## Commands
 
@@ -34,5 +35,7 @@ pip install -r requirements.txt
 python scripts/gen_dataset.py     # regenerates data/*.csv (deterministic; data is frozen)
 python -m pytest -v
 python run_all.py                 # E1-E5 + edge cases + figures -> output/
-python scripts/build_report_assets.py   # copy generated results into report/
+python scripts/build_report_assets.py   # copy generated results into report/ and dashboard/
+python scripts/build_report.py          # final report .docx/.html/.pdf from results.json
+python scripts/check_setup.py           # verify a fresh clone
 ```
